@@ -1,0 +1,42 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "extends": ["ultracite"],
+  "javascript": {
+    "globals": ["React"],
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+
+  "linter": {
+    "rules": {
+      "complexity": {
+        "noForEach": "off",
+        "noExcessiveCognitiveComplexity": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "a11y": {
+        "useSemanticElements": "off",
+        "noRedundantRoles": "off",
+        "useFocusableInteractive": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off"
+      },
+
+      "style": {
+        "useBlockStatements": "off"
+      },
+      "nursery": {
+        "useSortedClasses": "off",
+        "noDocumentCookie": "off",
+        "noNestedTernary": "off"
+      }
+    }
+  },
+  "files": {
+    "ignore": ["./src/app/(payload)/**/*.*", "./src/payload-types.ts"]
+  }
+}

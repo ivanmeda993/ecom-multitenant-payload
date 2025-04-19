@@ -1,8 +1,8 @@
-import { SearchIcon } from 'lucide-react'
-import { Input } from '@/components/ui/input'
+import { Input } from "@/components/ui/input";
+import { SearchIcon } from "lucide-react";
 
 interface SearchInputProps {
-  disabled?: boolean
+  disabled?: boolean;
 }
 export const SearchInput = ({ disabled }: SearchInputProps) => {
   return (
@@ -12,5 +12,5 @@ export const SearchInput = ({ disabled }: SearchInputProps) => {
         <Input className="pl-8" placeholder="Search" disabled={disabled} />
       </div>
     </div>
-  )
-}
+  );
+};

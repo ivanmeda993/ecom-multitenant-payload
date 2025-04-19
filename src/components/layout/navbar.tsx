@@ -1,12 +1,12 @@
 "use client";
-import Link from "next/link";
-import { Poppins } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { usePathname } from "next/navigation";
 import { NavbarSidebar } from "@/components/layout/navbar-sidebar";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { MenuIcon } from "lucide-react";
+import { Poppins } from "next/font/google";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -41,15 +41,15 @@ export const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <nav className="flex justify-between h-20 font-medium bg-white border-b">
-      <Link href="/public" className="pl-6 flex items-center">
-        <span className={cn("text-5xl font-semibold", poppins.className)}>
+    <nav className="flex h-20 justify-between border-b bg-white font-medium">
+      <Link href="/public" className="flex items-center pl-6">
+        <span className={cn("font-semibold text-5xl", poppins.className)}>
           funroad
         </span>
       </Link>
 
       {/* Descktop */}
-      <div className="hidden lg:flex items-center gap-4">
+      <div className="hidden items-center gap-4 lg:flex">
         {NAVBAR_ITEMS.map((item) => (
           <NavbarItem
             key={item.href}
@@ -70,20 +70,20 @@ export const Navbar = () => {
         <Button
           asChild
           variant="secondary"
-          className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white hover:bg-violet-500 transition-colors  text-lg"
+          className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-violet-500"
         >
           <Link href="/sign-in">Log in</Link>
         </Button>
         <Button
           asChild
           variant="secondary"
-          className="border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-black text-white hover:text-black hover:bg-violet-500 transition-colors  text-lg"
+          className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-violet-500 hover:text-black"
         >
           <Link href="/sign-up">Start Selling</Link>
         </Button>
       </div>
 
-      <div className="flex lg:hidden items-center justify-center">
+      <div className="flex items-center justify-center lg:hidden">
         <Button
           variant="ghost"
           className="size-12 border-transparent bg-white"
@@ -109,8 +109,8 @@ const NavbarItem = ({ children, isActive, href }: NavbarItemProps) => {
       asChild
       variant="outline"
       className={cn(
-        "bg-transparent  hover:bg-transparent rounded-full shadow-none hover:border-primary border-transparent px-3.5 text-lg",
-        isActive && "bg-black text-white hover:bg-black hover:text-white",
+        "rounded-full border-transparent bg-transparent px-3.5 text-lg shadow-none hover:border-primary hover:bg-transparent",
+        isActive && "bg-black text-white hover:bg-black hover:text-white"
       )}
     >
       <Link href={href}>{children}</Link>

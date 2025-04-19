@@ -1,104 +1,110 @@
-import type { Field, GroupField } from 'payload'
-import deepMerge from '@/lib/deep-merge'
+import deepMerge from "@/lib/deep-merge";
+import type { Field, GroupField } from "payload";
 
-type LinkType = (options?: { disableLabel?: boolean; overrides?: Partial<GroupField> }) => Field
+type LinkType = (options?: {
+  disableLabel?: boolean;
+  overrides?: Partial<GroupField>;
+}) => Field;
 
-export const link: LinkType = ({ disableLabel = false, overrides = {} } = {}) => {
+export const link: LinkType = ({
+  disableLabel = false,
+  overrides = {},
+} = {}) => {
   const linkResult: GroupField = {
-    name: 'link',
-    type: 'group',
+    name: "link",
+    type: "group",
     admin: {
       hideGutter: true,
     },
     fields: [
       {
-        type: 'row',
+        type: "row",
         fields: [
           {
-            name: 'type',
-            type: 'radio',
+            name: "type",
+            type: "radio",
             admin: {
-              layout: 'horizontal',
-              width: '50%',
+              layout: "horizontal",
+              width: "50%",
             },
-            defaultValue: 'reference',
+            defaultValue: "reference",
             options: [
               {
-                label: 'Internal link',
-                value: 'reference',
+                label: "Internal link",
+                value: "reference",
               },
               {
-                label: 'Custom URL',
-                value: 'custom',
+                label: "Custom URL",
+                value: "custom",
               },
             ],
           },
           {
-            name: 'newTab',
-            type: 'checkbox',
+            name: "newTab",
+            type: "checkbox",
             admin: {
               style: {
-                alignSelf: 'flex-end',
+                alignSelf: "flex-end",
               },
-              width: '50%',
+              width: "50%",
             },
-            label: 'Open in new tab',
+            label: "Open in new tab",
           },
         ],
       },
     ],
-  }
+  };
 
   const linkTypes: Field[] = [
     {
-      name: 'reference',
-      type: 'relationship',
+      name: "reference",
+      type: "relationship",
       admin: {
-        condition: (_, siblingData) => siblingData?.type === 'reference',
+        condition: (_, siblingData) => siblingData?.type === "reference",
       },
-      label: 'Document to link to',
+      label: "Document to link to",
       // TODO - add collection to this
       relationTo: [],
       required: true,
     },
     {
-      name: 'url',
-      type: 'text',
+      name: "url",
+      type: "text",
       admin: {
-        condition: (_, siblingData) => siblingData?.type === 'custom',
+        condition: (_, siblingData) => siblingData?.type === "custom",
       },
-      label: 'Custom URL',
+      label: "Custom URL",
       required: true,
     },
-  ]
+  ];
 
-  if (!disableLabel) {
+  if (disableLabel) {
+    linkResult.fields = [...linkResult.fields, ...linkTypes];
+  } else {
     linkTypes.map((linkType) => ({
       ...linkType,
       admin: {
         ...linkType.admin,
-        width: '50%',
+        width: "50%",
       },
-    }))
+    }));
 
     linkResult.fields.push({
-      type: 'row',
+      type: "row",
       fields: [
         ...linkTypes,
         {
-          name: 'label',
-          type: 'text',
+          name: "label",
+          type: "text",
           admin: {
-            width: '50%',
+            width: "50%",
           },
-          label: 'Label',
+          label: "Label",
           required: true,
         },
       ],
-    })
-  } else {
-    linkResult.fields = [...linkResult.fields, ...linkTypes]
+    });
   }
 
-  return deepMerge(linkResult, overrides)
-}
+  return deepMerge(linkResult, overrides);
+};

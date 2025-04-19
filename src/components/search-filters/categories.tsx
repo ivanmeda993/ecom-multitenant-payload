@@ -1,8 +1,8 @@
-import { Category } from '@/payload-types'
-import { CategoryDropdown } from '@/components/search-filters/category-dropdown'
+import { CategoryDropdown } from "@/components/search-filters/category-dropdown";
+import type { Category } from "@/payload-types";
 
 interface CategoriesProps {
-  data: Category[]
+  data: Category[];
 }
 export const Categories = ({ data }: CategoriesProps) => {
   return (
@@ -15,5 +15,5 @@ export const Categories = ({ data }: CategoriesProps) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

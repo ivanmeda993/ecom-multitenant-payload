@@ -1,14 +1,14 @@
-import React from 'react'
-import './styles.css'
-import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import type React from "react";
+import "./styles.css";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
-}
+  description: "A blank template using Payload in a Next.js app.",
+  title: "Payload Blank Template",
+};
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
+export default function RootLayout(props: { children: React.ReactNode }) {
+  const { children } = props;
 
   return (
     <html lang="en">
@@ -18,5 +18,5 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         </main>
       </body>
     </html>
-  )
+  );
 }
