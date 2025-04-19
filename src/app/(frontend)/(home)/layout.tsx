@@ -18,6 +18,7 @@ const Layout = async ({ children }: LayoutProps) => {
         exists: false,
       },
     },
+    sort: "name",
   });
 
   return (

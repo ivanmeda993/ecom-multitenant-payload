@@ -15,7 +15,7 @@ import { Users } from "./collections/users";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-export default buildConfig({
+const payloadConfig = buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
@@ -55,3 +55,5 @@ export default buildConfig({
     }),
   ],
 });
+
+export default payloadConfig;

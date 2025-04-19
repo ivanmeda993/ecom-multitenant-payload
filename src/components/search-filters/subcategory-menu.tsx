@@ -37,7 +37,7 @@ export const SubcategoryMenu = ({
             return (
               <Link
                 key={subcategory.id}
-                href="/"
+                href={`/${category.slug}/${subcategory.slug}`}
                 className="flex w-full items-center justify-between px-3 py-2 text-left font-medium hover:bg-black hover:text-white hover:underline"
               >
                 {subcategory.name}
