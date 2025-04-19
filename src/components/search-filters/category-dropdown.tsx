@@ -46,12 +46,10 @@ export const CategoryDropdown = ({
       <div className="relative">
         <Button
           className={cn(
-            "rounded-lg px-2 py-1 transition-all duration-100 ease-in-out hover:no-underline cursor-pointer",
-            categorySlug === category.slug && "font-bold",
-            isNavigationHovered && !isOpen && "text-muted-foreground",
+            "rounded-lg px-2 py-1    hover:no-underline cursor-pointer hover:scale-105 hover:font-semibold",
             categorySlug === category.slug &&
-              "scale-105 border-primary underline text-primary hover:underline ",
-            isOpen && "scale-105 border-primary "
+              "scale-105 border-primary underline text-primary hover:underline font-bold",
+            isOpen && "scale-105 font-semibold"
           )}
           variant="link"
           asChild
