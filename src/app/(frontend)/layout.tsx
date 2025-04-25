@@ -1,5 +1,6 @@
 import type React from "react";
 import "./styles.css";
+import { TRPCReactProvider } from "@/trpc/client";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata = {
@@ -14,7 +15,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body>
         <main>
-          <NuqsAdapter>{children}</NuqsAdapter>
+          <TRPCReactProvider>
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </TRPCReactProvider>
         </main>
       </body>
     </html>

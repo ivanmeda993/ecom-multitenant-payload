@@ -11,6 +11,7 @@
   "linter": {
     "rules": {
       "complexity": {
+        "noVoid": "off",
         "noForEach": "off",
         "noExcessiveCognitiveComplexity": "off"
       },
@@ -25,7 +26,9 @@
       "correctness": {
         "useExhaustiveDependencies": "off"
       },
-
+      "suspicious": {
+        "useAwait": "off"
+      },
       "style": {
         "useBlockStatements": "off"
       },

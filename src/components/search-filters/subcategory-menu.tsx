@@ -1,9 +1,9 @@
 import { checkCollection, checkForSubcategories } from "@/lib/check-category";
-import type { Category } from "@/payload-types";
+import type { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
 import Link from "next/link";
 
 interface SubcategoryMenuProps {
-  category: Category;
+  category: CategoriesGetManyOutputSingle;
   isOpen: boolean;
   position: { top: number; left: number };
 }
@@ -30,7 +30,7 @@ export const SubcategoryMenu = ({
         style={{ backgroundColor: bgColor }}
       >
         <div>
-          {category.subcategories?.docs?.map((subcategory) => {
+          {category.subcategories?.map((subcategory) => {
             const isCategory = checkCollection(subcategory);
             if (!isCategory) return null;
 

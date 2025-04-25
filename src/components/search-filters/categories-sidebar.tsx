@@ -1,8 +1,18 @@
 "use client";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { checkForSubcategories } from "@/lib/check-category";
-import type { Category } from "@/payload-types";
+import type {
+  CategoriesGetManyOutput,
+  CategoriesGetManyOutputSingle,
+} from "@/modules/categories/types";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,17 +20,20 @@ import { useState } from "react";
 interface CategoriesSidebarProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  data: Category[];
 }
 export const CategoriesSidebar = ({
   onOpenChange,
   isOpen,
-  data,
 }: CategoriesSidebarProps) => {
-  const [parentCategories, setParentCategories] = useState<Category[] | null>(
-    null
+  const trpc = useTRPC();
+  const { data, isFetching, isPending } = useQuery(
+    trpc.categories.getMany.queryOptions()
   );
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>();
+
+  const [parentCategories, setParentCategories] =
+    useState<CategoriesGetManyOutput | null>(null);
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoriesGetManyOutputSingle | null>();
   const router = useRouter();
 
   const currentCategories = parentCategories ?? data ?? [];
@@ -31,11 +44,10 @@ export const CategoriesSidebar = ({
     setSelectedCategory(null);
   };
 
-  const handleCategoryClick = (category: Category) => {
-    const hasSubcategories = checkForSubcategories(category);
-    if (hasSubcategories) {
+  const handleCategoryClick = (category: CategoriesGetManyOutputSingle) => {
+    if (category.subcategories && category.subcategories.length > 0) {
       setSelectedCategory(category);
-      setParentCategories(category.subcategories?.docs as Category[]);
+      setParentCategories(category?.subcategories as CategoriesGetManyOutput);
     } else {
       if (parentCategories && selectedCategory) {
         router.push(`/${selectedCategory.slug}/${category.slug}`);

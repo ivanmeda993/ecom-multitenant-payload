@@ -4,19 +4,16 @@ import { useDropdownPosition } from "@/components/search-filters/use-dropdown-po
 import { Button } from "@/components/ui/button";
 import { checkForSubcategories } from "@/lib/check-category";
 import { cn } from "@/lib/utils";
+import type { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
 import { useCategoryState } from "@/nuqs-hooks/category-hook";
-import type { Category } from "@/payload-types";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
 interface CategoryDropdownProps {
-  category: Category;
+  category: CategoriesGetManyOutputSingle;
   isNavigationHovered?: boolean;
 }
-export const CategoryDropdown = ({
-  category,
-  isNavigationHovered,
-}: CategoryDropdownProps) => {
+export const CategoryDropdown = ({ category }: CategoryDropdownProps) => {
   const { categorySlug } = useCategoryState();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
