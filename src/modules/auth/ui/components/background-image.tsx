@@ -1,15 +1,15 @@
 import Image from "next/image";
+import bgImage from "../../../../../public/auth-bg.png";
 
 export const BackgroundImage = () => {
   return (
-    <div className="relative h-screen w-full lg:col-span-2 hidden lg:block">
+    <div className="relative h-screen w-full lg:col-span-2 hidden  lg:flex justify-center items-center">
       <Image
-        src="/auth-bg.png"
+        src={bgImage}
         alt="Authentication background"
-        fill
         className="pointer-events-none object-contain object-center"
         priority
-        sizes="(min-width: 1024px) 40vw, 100vw"
+        layout="responsive"
       />
     </div>
   );
