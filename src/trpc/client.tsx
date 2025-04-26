@@ -1,5 +1,5 @@
 "use client";
-import { getServerSideURL } from "@/lib/get-url";
+import { getClientSideURL } from "@/lib/get-url";
 // ^-- to make sure we can mount the Provider from a server component
 import type { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -25,7 +25,7 @@ function getQueryClient() {
   return browserQueryClient;
 }
 function getUrl() {
-  const base = getServerSideURL();
+  const base = getClientSideURL();
   return `${base}/trpc-api/trpc`;
 }
 export function TRPCReactProvider(
