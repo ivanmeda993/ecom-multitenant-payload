@@ -1,20 +1,15 @@
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
-import { SearchFilters } from "@/components/search-filters";
-import { HydrateClient, prefetch, trpcServer } from "@/trpc/server";
+import { SearchFilterServer } from "@/components/search-filters/search-filter-server";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
-const Layout = async ({ children }: LayoutProps) => {
-  void prefetch(trpcServer.categories.getMany.queryOptions());
-
+const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col ">
       <Navbar />
-      <HydrateClient>
-        <SearchFilters />
-      </HydrateClient>
+      <SearchFilterServer />
       <div className="flex-1 bg-[#F4F4F0]">{children}</div>
 
       <Footer />
