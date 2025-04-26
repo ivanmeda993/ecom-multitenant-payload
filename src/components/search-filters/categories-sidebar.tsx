@@ -45,9 +45,11 @@ export const CategoriesSidebar = ({
   };
 
   const handleCategoryClick = (category: CategoriesGetManyOutputSingle) => {
-    if (category.subcategories && category.subcategories.length > 0) {
+    if (category.subcategories) {
       setSelectedCategory(category);
-      setParentCategories(category?.subcategories as CategoriesGetManyOutput);
+      setParentCategories(
+        category.subcategories as unknown as CategoriesGetManyOutput
+      );
     } else {
       if (parentCategories && selectedCategory) {
         router.push(`/${selectedCategory.slug}/${category.slug}`);
