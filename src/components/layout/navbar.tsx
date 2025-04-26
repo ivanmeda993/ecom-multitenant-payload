@@ -67,7 +67,7 @@ export const Navbar = () => {
       {isPending ? (
         <div className="hidden lg:flex lg:min-w-[343px] " />
       ) : (
-        <div>
+        <div className="lg:min-w-[343px] flex items-center justify-end">
           {session?.user ? (
             <Button
               asChild

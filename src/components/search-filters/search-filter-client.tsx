@@ -30,7 +30,7 @@ const SearchFiltersSkeleton = () => {
     >
       <SearchInput disabled />
       <div className="hidden lg:block">
-        <div className="h-11" />
+        <div className="h-9" />
       </div>
     </div>
   );
