@@ -1,4 +1,4 @@
-import { SearchFilters } from "@/components/search-filters/index";
+import { SearchFilters } from "@/components/search-filters/search-filter-client";
 import { HydrateClient, prefetch, trpcServer } from "@/trpc/server";
 
 export const SearchFilterServer = async () => {

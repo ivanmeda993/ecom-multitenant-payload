@@ -11,7 +11,6 @@ const Layout = ({ children }: LayoutProps) => {
       <Navbar />
       <SearchFilterServer />
       <div className="flex-1 bg-[#F4F4F0]">{children}</div>
-
       <Footer />
     </div>
   );
