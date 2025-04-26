@@ -67,11 +67,11 @@ export const SignUpView = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5">
-      <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-y-auto flex items-center justify-center ">
+      <div className="bg-[#F4F4F0] h-screen w-full lg:col-span-3 overflow-y-auto flex items-center justify-center px-2  ">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-8 p-4 lg:p-16 w-full min-h-[50dvh]"
+            className="flex flex-col gap-8 p-4 lg:p-16 w-full lg:min-h-[50dvh] max-w-4xl mx-auto border-1 border-black rounded-lg  "
           >
             <div className="flex items-center justify-between mb-8">
               <Logo />
