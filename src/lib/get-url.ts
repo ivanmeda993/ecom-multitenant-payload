@@ -1,7 +1,7 @@
 import canUseDOM from "./can-use-dom";
 
 export const getServerSideURL = () => {
-  let url = "";
+  let url: string | undefined;
 
   if (!url && process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
@@ -14,6 +14,8 @@ export const getServerSideURL = () => {
   if (!url) {
     url = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
   }
+
+  console.log("SERVER URL", url);
 
   return url;
 };

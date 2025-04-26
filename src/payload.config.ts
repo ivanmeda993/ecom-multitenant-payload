@@ -8,6 +8,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 
 import { defaultLexical } from "@/fields/default-lexical";
+import { getServerSideURL } from "@/lib/get-url";
 import { COOKIE_PREFIX } from "@/modules/auth/constants";
 import { Category } from "./collections/category";
 import { Media } from "./collections/media";
@@ -42,6 +43,7 @@ const payloadConfig = buildConfig({
     defaultFromName: process.env.RESEND_FROM_NAME || "",
     apiKey: process.env.RESEND_API_KEY || "",
   }),
+  cors: [getServerSideURL()].filter(Boolean),
   sharp,
   plugins: [
     // storage-adapter-placeholder
