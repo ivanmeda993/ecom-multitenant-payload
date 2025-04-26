@@ -8,6 +8,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 
 import { defaultLexical } from "@/fields/default-lexical";
+import { COOKIE_PREFIX } from "@/modules/auth/constants";
 import { Category } from "./collections/category";
 import { Media } from "./collections/media";
 import { Users } from "./collections/users";
@@ -22,6 +23,8 @@ const payloadConfig = buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  // IMPORTANT: this is the prefix for all cookies
+  cookiePrefix: COOKIE_PREFIX,
   collections: [Users, Category, Media],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",

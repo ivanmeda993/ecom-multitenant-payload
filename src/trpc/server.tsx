@@ -26,6 +26,8 @@ export function HydrateClient(props: { children: React.ReactNode }) {
   );
 }
 
+export const trprcCaller = appRouter.createCaller(createTRPCContext);
+
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
   queryOptions: T
