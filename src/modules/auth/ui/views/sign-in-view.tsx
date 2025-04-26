@@ -16,7 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
+
+import { BackgroundImage } from "@/modules/auth/ui/components/background-image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -106,15 +107,7 @@ export const SignInView = () => {
           </form>
         </Form>
       </div>
-      <div className="relative h-screen w-full lg:col-span-2 hidden lg:block">
-        <Image
-          src="/auth-bg.png"
-          alt="Authentication background"
-          fill
-          className="pointer-events-none object-contain object-center"
-          priority
-        />
-      </div>
+      <BackgroundImage />
     </div>
   );
 };
