@@ -45,8 +45,9 @@ export const CategoriesSidebar = ({
   };
 
   const handleCategoryClick = (category: CategoriesGetManyOutputSingle) => {
+    setSelectedCategory(category);
+
     if (category.subcategories) {
-      setSelectedCategory(category);
       setParentCategories(
         category.subcategories as unknown as CategoriesGetManyOutput
       );
