@@ -65,7 +65,7 @@ export const Navbar = () => {
       />
 
       {isPending ? (
-        <div className="hidden lg:flex lg:min-w-[200px] " />
+        <div className="hidden lg:flex lg:min-w-[343px] " />
       ) : (
         <div>
           {session?.user ? (
@@ -77,7 +77,7 @@ export const Navbar = () => {
               <Link href="/admin">Dashboard</Link>
             </Button>
           ) : (
-            <div className="hidden lg:flex">
+            <div className="hidden lg:flex h-full">
               <Button
                 asChild
                 variant="secondary"
