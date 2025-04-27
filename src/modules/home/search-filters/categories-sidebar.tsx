@@ -46,9 +46,7 @@ export const CategoriesSidebar = ({
     setSelectedCategory(category);
 
     if (category.subcategories) {
-      setParentCategories(
-        category.subcategories as unknown as CategoriesGetManyOutput
-      );
+      setParentCategories(category.subcategories as CategoriesGetManyOutput);
     } else {
       if (parentCategories && selectedCategory) {
         router.push(`/${selectedCategory.slug}/${category.slug}`);
