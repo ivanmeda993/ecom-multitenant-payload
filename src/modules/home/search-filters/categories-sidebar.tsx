@@ -26,9 +26,7 @@ export const CategoriesSidebar = ({
   isOpen,
 }: CategoriesSidebarProps) => {
   const trpc = useTRPC();
-  const { data, isFetching, isPending } = useQuery(
-    trpc.categories.getMany.queryOptions()
-  );
+  const { data } = useQuery(trpc.categories.getMany.queryOptions());
 
   const [parentCategories, setParentCategories] =
     useState<CategoriesGetManyOutput | null>(null);

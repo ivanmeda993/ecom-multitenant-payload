@@ -1,11 +1,11 @@
 interface SubCategoryPageProps {
-  params: {
+  params: Promise<{
     category: string;
     subcategory: string;
-  };
+  }>;
 }
-const SubCategoryPage = ({ params }: SubCategoryPageProps) => {
-  const { category, subcategory } = params;
+const SubCategoryPage = async ({ params }: SubCategoryPageProps) => {
+  const { category, subcategory } = await params;
   return (
     <div>
       SubCategoryPage {category}, sub {subcategory}
