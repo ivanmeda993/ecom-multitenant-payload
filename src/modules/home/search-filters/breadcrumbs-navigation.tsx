@@ -26,7 +26,7 @@ export const BreadcrumbsNavigation = ({
         {activeSubcategoryName ? (
           <>
             <BreadcrumbItem>
-              <BreadcrumbLink>
+              <BreadcrumbLink asChild>
                 <Link
                   href={`/${activeCategorySlug}`}
                   className="text-xl font-medium underline text-primary"

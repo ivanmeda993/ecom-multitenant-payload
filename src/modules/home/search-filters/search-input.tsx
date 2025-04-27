@@ -13,7 +13,9 @@ interface SearchInputProps {
 }
 export const SearchInput = ({ disabled }: SearchInputProps) => {
   const trpc = useTRPC();
-  const { data: session } = useQuery(trpc.auth.session.queryOptions());
+  const { data: session, isPending } = useQuery(
+    trpc.auth.session.queryOptions()
+  );
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
@@ -31,7 +33,7 @@ export const SearchInput = ({ disabled }: SearchInputProps) => {
         <ListFilterIcon />
         <span className="sr-only">Filter</span>
       </Button>
-      {session?.user && (
+      {!isPending && session?.user && (
         <Button>
           <Link href="/library" className="flex items-center gap-2">
             <BookCheckIcon />

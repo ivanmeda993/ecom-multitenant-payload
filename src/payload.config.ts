@@ -7,10 +7,11 @@ import { fileURLToPath } from "node:url";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
+import { Products } from "@/collections/products";
 import { defaultLexical } from "@/fields/default-lexical";
 import { getServerSideURL } from "@/lib/get-url";
 import { COOKIE_PREFIX } from "@/modules/auth/constants";
-import { Category } from "./collections/category";
+import { Categories } from "./collections/categories";
 import { Media } from "./collections/media";
 import { Users } from "./collections/users";
 
@@ -26,7 +27,7 @@ const payloadConfig = buildConfig({
   },
   // IMPORTANT: this is the prefix for all cookies
   cookiePrefix: COOKIE_PREFIX,
-  collections: [Users, Category, Media],
+  collections: [Users, Categories, Products, Media],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

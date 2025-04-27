@@ -5,6 +5,7 @@ import type { CategoriesGetManyOutput } from "@/modules/categories/types";
 import { CategoriesSidebar } from "@/modules/home/search-filters/categories-sidebar";
 import { CategoryDropdown } from "@/modules/home/search-filters/category-dropdown";
 import { ListFilterIcon } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -22,7 +23,7 @@ export const Categories = ({ data }: CategoriesProps) => {
   const mesureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
 
-  const [visibleCount, setVisibleCount] = useState(data?.length);
+  const [visibleCount, setVisibleCount] = useState(data?.length + 1);
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -76,6 +77,18 @@ export const Categories = ({ data }: CategoriesProps) => {
           left: -9999,
         }}
       >
+        <Button
+          className={cn(
+            "rounded-lg px-2 py-1    hover:no-underline cursor-pointer hover:scale-105 hover:font-semibold",
+            activeCategory === "all" &&
+              "scale-105 border-primary underline text-primary hover:underline font-bold"
+          )}
+          variant="link"
+          asChild
+        >
+          <Link href="/">All</Link>
+        </Button>
+
         {data?.map((category) => (
           <div key={category.id}>
             <CategoryDropdown
@@ -93,6 +106,18 @@ export const Categories = ({ data }: CategoriesProps) => {
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
       >
+        <Button
+          className={cn(
+            "rounded-lg px-2 py-1    hover:no-underline cursor-pointer hover:scale-105 hover:font-semibold",
+            activeCategory === "all" &&
+              "scale-105 border-primary underline text-primary hover:underline font-bold"
+          )}
+          variant="link"
+          asChild
+        >
+          <Link href="/">All</Link>
+        </Button>
+
         {data?.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
             <CategoryDropdown

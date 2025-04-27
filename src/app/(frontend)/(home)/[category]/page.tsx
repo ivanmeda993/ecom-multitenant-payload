@@ -1,3 +1,6 @@
+import { ProductList } from "@/modules/products/ui/components/product-list";
+import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
+
 type CategoryPageProps = {
   params: Promise<{
     category: string;
@@ -5,7 +8,23 @@ type CategoryPageProps = {
 };
 const CategoryPage = async ({ params }: CategoryPageProps) => {
   const { category } = await params;
-  return <div>CategoryPage {category}</div>;
+
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(
+    trpcServer.products.getMany.queryOptions({
+      categorySlug: category,
+    })
+  );
+
+  return (
+    <div>
+      CategoryPage {category}
+      <br />
+      <HydrateClient>
+        <ProductList category={category} />
+      </HydrateClient>
+    </div>
+  );
 };
 
 export default CategoryPage;

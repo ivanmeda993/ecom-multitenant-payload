@@ -1,8 +1,11 @@
 import { slugField } from "@/fields/slug/slug-field";
 import type { CollectionConfig } from "payload";
 
-export const Category: CollectionConfig = {
+export const Categories: CollectionConfig = {
   slug: "category",
+  admin: {
+    useAsTitle: "name",
+  },
   fields: [
     {
       name: "name",
