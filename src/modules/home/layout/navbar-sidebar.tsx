@@ -16,11 +16,13 @@ interface NavbarSidebarProps {
   items: NavbarItem[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  hasSession: boolean;
 }
 export const NavbarSidebar = ({
   items,
   open,
   onOpenChange,
+  hasSession,
 }: NavbarSidebarProps) => {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -41,20 +43,32 @@ export const NavbarSidebar = ({
           ))}
 
           <div className="border-t">
-            <Link
-              href="/sign-in"
-              className="flex w-full items-center p-4 text-left font-medium text-base hover:bg-black hover:text-white"
-              onClick={() => onOpenChange(false)}
-            >
-              Log in
-            </Link>
-            <Link
-              href="/sign-up"
-              className="flex w-full items-center p-4 text-left font-medium text-base hover:bg-black hover:text-white"
-              onClick={() => onOpenChange(false)}
-            >
-              Start Selling
-            </Link>
+            {hasSession ? (
+              <Link
+                href="/admin"
+                className="flex w-full items-center p-4 text-left font-medium text-base hover:bg-black hover:text-white"
+                onClick={() => onOpenChange(false)}
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/sign-in"
+                  className="flex w-full items-center p-4 text-left font-medium text-base hover:bg-black hover:text-white"
+                  onClick={() => onOpenChange(false)}
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="flex w-full items-center p-4 text-left font-medium text-base hover:bg-black hover:text-white"
+                  onClick={() => onOpenChange(false)}
+                >
+                  Start Selling
+                </Link>
+              </>
+            )}
           </div>
         </ScrollArea>
       </SheetContent>

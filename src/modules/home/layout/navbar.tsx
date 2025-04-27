@@ -1,8 +1,8 @@
 "use client";
-import { NavbarSidebar } from "@/components/layout/navbar-sidebar";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { NavbarSidebar } from "@/modules/home/layout/navbar-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { MenuIcon } from "lucide-react";
@@ -62,12 +62,13 @@ export const Navbar = () => {
         items={NAVBAR_ITEMS}
         open={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
+        hasSession={!!session}
       />
 
       {isPending ? (
         <div className="hidden lg:flex lg:min-w-[343px] " />
       ) : (
-        <div className="lg:min-w-[343px] flex items-center justify-end">
+        <div className="hidden lg:min-w-[343px] lg:flex items-center justify-end">
           {session?.user ? (
             <Button
               asChild

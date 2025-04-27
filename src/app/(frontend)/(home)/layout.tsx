@@ -1,6 +1,6 @@
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/layout/navbar";
-import { SearchFilterServer } from "@/components/search-filters/search-filter-server";
+import { Footer } from "@/modules/home/layout/footer";
+import { Navbar } from "@/modules/home/layout/navbar";
+import { SearchFilterServer } from "@/modules/home/search-filters/search-filter-server";
 
 interface LayoutProps {
   children: React.ReactNode;

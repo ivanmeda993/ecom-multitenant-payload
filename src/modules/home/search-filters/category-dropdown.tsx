@@ -1,20 +1,22 @@
 "use client";
-import { SubcategoryMenu } from "@/components/search-filters/subcategory-menu";
-import { useDropdownPosition } from "@/components/search-filters/use-dropdown-position";
 import { Button } from "@/components/ui/button";
 import { checkForSubcategories } from "@/lib/check-category";
 import { cn } from "@/lib/utils";
 import type { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
-import { useCategoryState } from "@/nuqs-hooks/category-hook";
+import { SubcategoryMenu } from "@/modules/home/search-filters/subcategory-menu";
+import { useDropdownPosition } from "@/modules/home/search-filters/use-dropdown-position";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
 interface CategoryDropdownProps {
   category: CategoriesGetManyOutputSingle;
   isNavigationHovered?: boolean;
+  isActive: boolean;
 }
-export const CategoryDropdown = ({ category }: CategoryDropdownProps) => {
-  const { categorySlug } = useCategoryState();
+export const CategoryDropdown = ({
+  category,
+  isActive,
+}: CategoryDropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +46,7 @@ export const CategoryDropdown = ({ category }: CategoryDropdownProps) => {
         <Button
           className={cn(
             "rounded-lg px-2 py-1    hover:no-underline cursor-pointer hover:scale-105 hover:font-semibold",
-            categorySlug === category.slug &&
+            isActive &&
               "scale-105 border-primary underline text-primary hover:underline font-bold",
             isOpen && "scale-105 font-semibold"
           )}

@@ -1,10 +1,11 @@
 "use client";
-import { CategoriesSidebar } from "@/components/search-filters/categories-sidebar";
-import { CategoryDropdown } from "@/components/search-filters/category-dropdown";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { CategoriesSidebar } from "@/modules/home/search-filters/categories-sidebar";
+import { CategoryDropdown } from "@/modules/home/search-filters/category-dropdown";
 import { ListFilterIcon } from "lucide-react";
+import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 interface CategoriesProps {
@@ -12,6 +13,11 @@ interface CategoriesProps {
 }
 
 export const Categories = ({ data }: CategoriesProps) => {
+  const params = useParams();
+
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || "all";
+
   const containerRef = useRef<HTMLDivElement>(null);
   const mesureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -54,6 +60,7 @@ export const Categories = ({ data }: CategoriesProps) => {
       resizeObserver.disconnect();
     };
   }, [data?.length]);
+
   return (
     <div className="relative w-full ">
       <CategoriesSidebar
@@ -71,7 +78,11 @@ export const Categories = ({ data }: CategoriesProps) => {
       >
         {data?.map((category) => (
           <div key={category.id}>
-            <CategoryDropdown category={category} isNavigationHovered={false} />
+            <CategoryDropdown
+              category={category}
+              isNavigationHovered={false}
+              isActive={activeCategory === category.slug}
+            />
           </div>
         ))}
       </div>
@@ -85,6 +96,7 @@ export const Categories = ({ data }: CategoriesProps) => {
         {data?.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
             <CategoryDropdown
+              isActive={activeCategory === category.slug}
               category={category}
               isNavigationHovered={isAnyHovered}
             />

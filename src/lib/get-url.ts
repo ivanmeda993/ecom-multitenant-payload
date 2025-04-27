@@ -15,8 +15,6 @@ export const getServerSideURL = () => {
     url = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
   }
 
-  console.log("SERVER URL", url);
-
   return url;
 };
 

@@ -1,7 +1,7 @@
 "use client";
-import { CategoriesSidebar } from "@/components/search-filters/categories-sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CategoriesSidebar } from "@/modules/home/search-filters/categories-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { BookCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
