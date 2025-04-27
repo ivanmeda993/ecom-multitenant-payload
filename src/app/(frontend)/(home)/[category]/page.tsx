@@ -3,6 +3,7 @@ import { ProductFilters } from "@/modules/products/ui/components/product-filters
 import { ProductList } from "@/modules/products/ui/components/product-list";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
+import { Suspense } from "react";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -30,7 +31,9 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
             <ProductFilters />
           </div>
           <div className="lg:col-span-4 xl:col-span-6">
-            <ProductList category={category} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <ProductList category={category} />
+            </Suspense>
           </div>
         </div>
       </div>

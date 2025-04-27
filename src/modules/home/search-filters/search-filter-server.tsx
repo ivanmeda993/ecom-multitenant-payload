@@ -1,11 +1,17 @@
-import { SearchFilters } from "@/modules/home/search-filters/search-filter-client";
+import {
+  SearchFilters,
+  SearchFiltersSkeleton,
+} from "@/modules/home/search-filters/search-filter-client";
 import { HydrateClient, prefetch, trpcServer } from "@/trpc/server";
+import { Suspense } from "react";
 
 export const SearchFilterServer = async () => {
   void prefetch(trpcServer.categories.getMany.queryOptions());
   return (
     <HydrateClient>
-      <SearchFilters />
+      <Suspense fallback={<SearchFiltersSkeleton />}>
+        <SearchFilters />
+      </Suspense>
     </HydrateClient>
   );
 };

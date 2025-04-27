@@ -1,5 +1,4 @@
 "use client";
-import { withErrorBoundaryAndSuspense } from "@/components/error-suspense-hoc/with-error-boundary-and-suspense";
 import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -8,7 +7,7 @@ interface ProductListProps {
   category?: string;
 }
 
-const ProductListContent = ({ category }: ProductListProps) => {
+export const ProductList = ({ category }: ProductListProps) => {
   const { filters } = useProductFilters();
   const trpc = useTRPC();
   const { data } = useSuspenseQuery(
@@ -29,4 +28,4 @@ const ProductListContent = ({ category }: ProductListProps) => {
   );
 };
 
-export const ProductList = withErrorBoundaryAndSuspense(ProductListContent);
+// export const ProductList = withErrorBoundaryAndSuspense(ProductListContent);
