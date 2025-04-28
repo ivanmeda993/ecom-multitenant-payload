@@ -4,6 +4,8 @@ import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 
+export const dynamic = "force-dynamic";
+
 interface SubCategoryPageProps {
   params: Promise<{
     category: string;
