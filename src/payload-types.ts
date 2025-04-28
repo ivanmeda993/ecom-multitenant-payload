@@ -184,7 +184,7 @@ export interface Product {
   tags: (string | Tag)[];
   description?: string | null;
   price: number;
-  image?: (string | null) | Media;
+  image: string | Media;
   refundPolicy?: ('30-days' | '14-days' | '7-days' | '3-days' | '1-day' | 'no-refund') | null;
   updatedAt: string;
   createdAt: string;

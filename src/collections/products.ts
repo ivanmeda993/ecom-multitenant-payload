@@ -46,6 +46,8 @@ export const Products: CollectionConfig = {
       name: "image",
       type: "upload",
       relationTo: "media",
+      hasMany: false,
+      required: true,
     },
     {
       name: "refundPolicy",

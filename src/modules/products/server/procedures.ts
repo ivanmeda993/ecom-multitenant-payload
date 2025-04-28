@@ -82,6 +82,8 @@ export const productsRouter = createTRPCRouter({
         depth: 1,
         where,
         sort,
+        page: input.cursor,
+        limit: input.limit,
       });
 
       return data;

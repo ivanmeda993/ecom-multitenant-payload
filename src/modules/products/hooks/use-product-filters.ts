@@ -5,7 +5,19 @@ export const useProductFilters = () => {
   const [filters, setFilters] = useQueryStates(params);
   console.log("FILTERS", filters);
 
-  const hasFilters = Object.values(filters).some(Boolean);
+  const hasAnyFilters = Object.entries(filters).some(([key, value]) => {
+    if (key === "sort") return false;
+
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+
+    if (typeof value === "string") {
+      return value !== "";
+    }
+
+    return value !== null;
+  });
 
   const resetFilters = async () => {
     await setFilters(
@@ -24,7 +36,7 @@ export const useProductFilters = () => {
   return {
     filters,
     setFilters,
-    hasFilters,
+    hasFilters: hasAnyFilters,
     resetFilters,
     onChangeFilter,
   };

@@ -30,7 +30,8 @@
         "useAwait": "off"
       },
       "style": {
-        "useBlockStatements": "off"
+        "useBlockStatements": "off",
+        "noNonNullAssertion": "off"
       },
       "nursery": {
         "useSortedClasses": "off",

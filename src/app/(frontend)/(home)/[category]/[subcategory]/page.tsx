@@ -1,4 +1,4 @@
-import { ProductList } from "@/modules/products/ui/components/product-list";
+import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 
 interface SubCategoryPageProps {
@@ -8,7 +8,7 @@ interface SubCategoryPageProps {
   }>;
 }
 const SubCategoryPage = async ({ params }: SubCategoryPageProps) => {
-  const { category, subcategory } = await params;
+  const { subcategory } = await params;
 
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(
@@ -17,13 +17,9 @@ const SubCategoryPage = async ({ params }: SubCategoryPageProps) => {
     })
   );
   return (
-    <div>
-      SubCategory {category}
-      <br />
-      <HydrateClient>
-        <ProductList category={subcategory} />
-      </HydrateClient>
-    </div>
+    <HydrateClient>
+      <ProductListView category={subcategory} />
+    </HydrateClient>
   );
 };
 

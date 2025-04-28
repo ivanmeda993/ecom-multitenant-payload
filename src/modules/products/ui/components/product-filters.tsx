@@ -9,6 +9,8 @@ export const ProductFilters = () => {
   const { filters, resetFilters, onChangeFilter, hasFilters } =
     useProductFilters();
 
+  console.log("FILTERS", filters);
+
   return (
     <div className="border rounded-md bg-white">
       <div className="p-4 border-b flex items-center justify-between">

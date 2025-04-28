@@ -1,5 +1,5 @@
 import { loadProductFilters } from "@/modules/products/nuqs-filters";
-import { ProductList } from "@/modules/products/ui/components/product-list";
+import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { HydrateClient, prefetch, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 
@@ -13,7 +13,6 @@ const HomePage = async ({ searchParams }: Props) => {
   const filters = await loadProductFilters(searchParams);
   void prefetch(
     trpcServer.products.getMany.queryOptions({
-      categorySlug: "all",
       ...filters,
     }),
     {
@@ -23,7 +22,7 @@ const HomePage = async ({ searchParams }: Props) => {
 
   return (
     <HydrateClient>
-      <ProductList />
+      <ProductListView />
     </HydrateClient>
   );
 };
