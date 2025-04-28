@@ -67,7 +67,6 @@ export const ImageMedia: React.FC<Props> = (props) => {
         .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
         .join(", ");
 
-  console.log("SRC ->", src);
   return (
     <NextImage
       alt={alt || ""}

@@ -31,15 +31,10 @@ export const trprcCaller = appRouter.createCaller(createTRPCContext);
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
-  queryOptions: T,
-  opts?: { infiniteQuery?: boolean }
+  queryOptions: T
 ) {
   const queryClient = getQueryClient();
-
-  const isActuallyInfinite =
-    opts?.infiniteQuery || queryOptions.queryKey[1]?.type === "infinite";
-
-  if (isActuallyInfinite) {
+  if (queryOptions.queryKey[1]?.type === "infinite") {
     console.log("prefetching infinite query");
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     void queryClient.prefetchInfiniteQuery(queryOptions as any);

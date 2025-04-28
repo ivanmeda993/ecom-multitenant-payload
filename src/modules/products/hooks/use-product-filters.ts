@@ -3,7 +3,6 @@ import { useQueryStates } from "nuqs";
 
 export const useProductFilters = () => {
   const [filters, setFilters] = useQueryStates(params);
-  console.log("FILTERS", filters);
 
   const hasAnyFilters = Object.entries(filters).some(([key, value]) => {
     if (key === "sort") return false;

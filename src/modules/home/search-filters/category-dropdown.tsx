@@ -4,7 +4,6 @@ import { checkForSubcategories } from "@/lib/check-category";
 import { cn } from "@/lib/utils";
 import type { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
 import { SubcategoryMenu } from "@/modules/home/search-filters/subcategory-menu";
-import { useDropdownPosition } from "@/modules/home/search-filters/use-dropdown-position";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
@@ -20,8 +19,6 @@ export const CategoryDropdown = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const { getDropdownPosition } = useDropdownPosition(dropdownRef);
-
   const hasSubcategories = checkForSubcategories(category);
 
   const onMouseEnter = () => hasSubcategories && setIsOpen(true);
@@ -31,8 +28,6 @@ export const CategoryDropdown = ({
   //     setIsOpen((prev) => !prev);
   //   }
   // };
-
-  const dropdownPosition = getDropdownPosition();
 
   return (
     // biome-ignore lint/nursery/noStaticElementInteractions: <explanation>
@@ -67,11 +62,7 @@ export const CategoryDropdown = ({
         )}
       </div>
 
-      <SubcategoryMenu
-        category={category}
-        isOpen={isOpen}
-        position={dropdownPosition}
-      />
+      <SubcategoryMenu category={category} isOpen={isOpen} />
     </div>
   );
 };

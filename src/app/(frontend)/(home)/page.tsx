@@ -1,6 +1,7 @@
+import { DEFAULT_PAGE_LIMIT } from "@/constants";
 import { loadProductFilters } from "@/modules/products/nuqs-filters";
 import { ProductListView } from "@/modules/products/ui/views/product-list-view";
-import { HydrateClient, prefetch, trpcServer } from "@/trpc/server";
+import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 
 interface Props {
@@ -11,13 +12,13 @@ export const dynamic = "force-dynamic";
 
 const HomePage = async ({ searchParams }: Props) => {
   const filters = await loadProductFilters(searchParams);
-  void prefetch(
-    trpcServer.products.getMany.queryOptions({
+
+  const queryClient = getQueryClient();
+  void queryClient.prefetchInfiniteQuery(
+    trpcServer.products.getMany.infiniteQueryOptions({
       ...filters,
-    }),
-    {
-      infiniteQuery: true,
-    }
+      limit: DEFAULT_PAGE_LIMIT,
+    })
   );
 
   return (

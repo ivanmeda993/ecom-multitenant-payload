@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_LIMIT } from "@/constants";
 import { loadProductFilters } from "@/modules/products/nuqs-filters";
 import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
@@ -14,10 +15,11 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const filters = await loadProductFilters(searchParams);
 
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(
-    trpcServer.products.getMany.queryOptions({
-      categorySlug: category,
+  void queryClient.prefetchInfiniteQuery(
+    trpcServer.products.getMany.infiniteQueryOptions({
       ...filters,
+      categorySlug: category,
+      limit: DEFAULT_PAGE_LIMIT,
     })
   );
 

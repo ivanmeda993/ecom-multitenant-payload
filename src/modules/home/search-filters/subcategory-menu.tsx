@@ -5,13 +5,8 @@ import Link from "next/link";
 interface SubcategoryMenuProps {
   category: CategoriesGetManyOutputSingle;
   isOpen: boolean;
-  position: { top: number; left: number };
 }
-export const SubcategoryMenu = ({
-  category,
-  isOpen,
-  position,
-}: SubcategoryMenuProps) => {
+export const SubcategoryMenu = ({ category, isOpen }: SubcategoryMenuProps) => {
   const hasSubcategories = checkForSubcategories(category);
 
   if (!isOpen || !hasSubcategories) {
@@ -21,8 +16,8 @@ export const SubcategoryMenu = ({
   const bgColor = category.color || "#F5F5F5";
   return (
     <div
-      className="fixed z-[100] border-primary shadow-xl drop-shadow-2xl"
-      style={{ ...position }}
+      className="absolute z-[100] border-primary shadow-xl drop-shadow-2xl"
+      style={{ top: "100%", left: 0 }}
     >
       <div className="h-3 w-52" />
       <div
