@@ -18,7 +18,7 @@ export const ProductFilterItem = ({
   const handleClick = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className={cn("border-b p-4 flex flex-col gap-2", className)}>
+    <div className={cn("border-b p-4 flex flex-col gap-2 w-full", className)}>
       <div
         className="flex items-center justify-between cursor-pointer"
         onClick={handleClick}

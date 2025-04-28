@@ -10,8 +10,8 @@ export const ProductFilters = () => {
     useProductFilters();
 
   return (
-    <div className="border rounded-md bg-white">
-      <div className="p-4 border-b flex items-center justify-between">
+    <div className="border rounded-md bg-white min-w-full ">
+      <div className="p-4 border-b flex items-center justify-between w-full">
         <p className="font-medium">Filters</p>
         {hasFilters && (
           <button className="underline" type="button" onClick={resetFilters}>

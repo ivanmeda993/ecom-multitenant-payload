@@ -17,7 +17,7 @@ export const ProductListView = async ({ category }: ProductListViewProps) => {
         <ProductSort />
       </div>
       <div className="grid grid-col-1 lg:grid-cols-6 xl:grid-cols-8 gap-y-6 gap-x-16">
-        <div className="lg:col-span-2 ">
+        <div className="lg:col-span-2  overflow-hidden">
           <ProductFilters />
         </div>
         <div className="lg:col-span-4 xl:col-span-6">
