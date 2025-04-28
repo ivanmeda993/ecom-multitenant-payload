@@ -1,13 +1,13 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { CategoriesGetManyOutput } from "@/modules/categories/types";
-import { CategoriesSidebar } from "@/modules/home/search-filters/categories-sidebar";
-import { CategoryDropdown } from "@/modules/home/search-filters/category-dropdown";
 import { ListFilterIcon } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { CategoriesSidebar } from "./categories-sidebar";
+import { CategoryDropdown } from "./category-dropdown";
 
 interface CategoriesProps {
   data: CategoriesGetManyOutput;
@@ -16,131 +16,127 @@ interface CategoriesProps {
 export const Categories = ({ data }: CategoriesProps) => {
   const params = useParams();
 
-  const categoryParam = params.category as string | undefined;
-  const activeCategory = categoryParam || "all";
+  const categoriesWithAll: CategoriesGetManyOutput = [
+    {
+      id: "all",
+      slug: "all",
+      name: "All",
+      subcategories: [],
+      updatedAt: new Date().toDateString(),
+      createdAt: new Date().toDateString(),
+    },
+    ...data,
+  ];
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const mesureRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
 
-  const [visibleCount, setVisibleCount] = useState(data?.length + 1);
+  const [visibleCount, setVisibleCount] = useState(categoriesWithAll.length);
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const categoryParam = params?.category as string | undefined;
+  const activeCategory = categoryParam || "all";
+
+  const activeCategoryIndex = categoriesWithAll.findIndex(
+    (category) => category.slug === activeCategory
+  );
+
+  const isCategoryHidden =
+    activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
+
   useEffect(() => {
-    const calculateVisibleCount = () => {
-      if (!containerRef.current || !mesureRef.current || !viewAllRef.current) {
+    const calculateVisible = () => {
+      if (!containerRef.current || !measureRef.current || !viewAllRef.current)
         return;
-      }
 
       const containerWidth = containerRef.current.offsetWidth;
       const viewAllWidth = viewAllRef.current.offsetWidth;
       const availableWidth = containerWidth - viewAllWidth;
 
-      const items = Array.from(mesureRef.current.children);
-
+      const itmes = Array.from(measureRef.current.children);
       let totalWidth = 0;
-      let visibleCount = 0;
+      let visible = 0;
 
-      for (const item of items) {
+      for (const item of itmes) {
         const width = item.getBoundingClientRect().width;
 
-        if (totalWidth + width > availableWidth) {
-          break;
-        }
+        if (totalWidth + width > availableWidth) break;
 
         totalWidth += width;
-        visibleCount++;
+        visible++;
       }
-      setVisibleCount(visibleCount);
+      setVisibleCount(visible);
     };
-    const resizeObserver = new ResizeObserver(calculateVisibleCount);
+
+    const resizeObserver = new ResizeObserver(calculateVisible);
     // biome-ignore lint/style/noNonNullAssertion: <explanation>
     resizeObserver.observe(containerRef.current!);
+
     return () => {
       resizeObserver.disconnect();
     };
-  }, [data?.length]);
+  }, [categoriesWithAll.length]);
 
   return (
-    <div className="relative w-full ">
+    <div className="relative w-full">
+      {/* Categories sidebar */}
       <CategoriesSidebar
         isOpen={isSidebarOpen}
         onOpenChange={setIsSidebarOpen}
       />
+
+      {/* Hidden div to measure all items */}
       <div
-        ref={mesureRef}
+        ref={measureRef}
         className="absolute opacity-0 pointer-events-none flex"
         style={{
           position: "fixed",
-          top: -9999,
-          left: -9999,
+          top: "-9999",
+          left: "-9999",
         }}
       >
-        <Button
-          className={cn(
-            "rounded-lg px-2 py-1    hover:no-underline cursor-pointer hover:scale-105 hover:font-semibold",
-            activeCategory === "all" &&
-              "scale-105 border-primary underline text-primary hover:underline font-bold"
-          )}
-          variant="link"
-          asChild
-        >
-          <Link href="/">All</Link>
-        </Button>
-
-        {data?.map((category) => (
+        {categoriesWithAll.map((category) => (
           <div key={category.id}>
             <CategoryDropdown
               category={category}
-              isNavigationHovered={false}
               isActive={activeCategory === category.slug}
+              isNavigationHovered={false}
             />
           </div>
         ))}
       </div>
+
+      {/* Visible container */}
       {/* biome-ignore lint/nursery/noStaticElementInteractions: <explanation> */}
       <div
-        ref={containerRef}
         className="flex flex-nowrap items-center"
+        ref={containerRef}
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
       >
-        <Button
-          className={cn(
-            "rounded-lg px-2 py-1    hover:no-underline cursor-pointer hover:scale-105 hover:font-semibold",
-            activeCategory === "all" &&
-              "scale-105 border-primary underline text-primary hover:underline font-bold"
-          )}
-          variant="link"
-          asChild
-        >
-          <Link href="/">All</Link>
-        </Button>
-
-        {data?.slice(0, visibleCount).map((category) => (
+        {categoriesWithAll.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
             <CategoryDropdown
-              isActive={activeCategory === category.slug}
               category={category}
+              isActive={activeCategory === category.slug}
               isNavigationHovered={isAnyHovered}
             />
           </div>
         ))}
 
-        <div className="shrink-0 ml-auto" ref={viewAllRef}>
-          {visibleCount !== data?.length && (
-            <Button
-              variant="outline"
-              className={cn(
-                "rounded-lg px-2 py-1 transition-all duration-100 ease-in-out hover:no-underline cursor-pointer"
-              )}
-              onClick={() => setIsSidebarOpen(true)}
-            >
-              View All
-              <ListFilterIcon />
-            </Button>
-          )}
+        <div ref={viewAllRef} className="shrink-0">
+          <Button
+            className={cn(
+              " px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
+              isCategoryHidden && !isAnyHovered && "bg-white border-primary"
+            )}
+            onClick={() => setIsSidebarOpen(true)}
+          >
+            View All
+            <ListFilterIcon className="ml-2" />
+          </Button>
         </div>
       </div>
     </div>

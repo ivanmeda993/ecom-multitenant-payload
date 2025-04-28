@@ -1,12 +1,24 @@
 import { GET_MANY_PRODUCTS_INPUTS_SCHEMA } from "@/modules/products/schema";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-import type { Where } from "payload";
+import type { Sort, Where } from "payload";
 
 export const productsRouter = createTRPCRouter({
   getMany: baseProcedure
     .input(GET_MANY_PRODUCTS_INPUTS_SCHEMA)
     .query(async ({ ctx: { payload }, input }) => {
       const where: Where = {};
+      let sort: Sort = "-createdAt";
+
+      if (input.sort === "trending") {
+        sort = "name";
+      }
+
+      if (input.sort === "curated") {
+        sort = "-createdAt";
+      }
+      if (input.sort === "hot_and_new") {
+        sort = "+createdAt";
+      }
 
       if (input.minPrice && input.maxPrice) {
         where.price = {
@@ -57,12 +69,19 @@ export const productsRouter = createTRPCRouter({
         }
       }
 
+      if (input.tags && input.tags.length > 0) {
+        where["tags.name"] = {
+          in: input.tags,
+        };
+      }
+
       console.log("WHERE", where);
 
       const data = await payload.find({
         collection: "products",
         depth: 1,
         where,
+        sort,
       });
 
       return data;

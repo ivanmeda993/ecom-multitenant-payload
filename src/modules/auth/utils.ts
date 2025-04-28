@@ -1,5 +1,5 @@
 import "server-only"; // <-- ensure this file cannot be imported from the client
-import { AUTH_COOKIE } from "@/modules/auth/constants";
+import { AUTH_COOKIE } from "@/constants";
 import { cookies as getCookies } from "next/headers";
 
 export const generateAuthCookie = async (value: string) => {

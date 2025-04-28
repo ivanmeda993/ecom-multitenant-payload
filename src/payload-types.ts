@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     category: Category;
+    tags: Tag;
     products: Product;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,6 +84,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     category: CategorySelect<false> | CategorySelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -160,6 +162,17 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  name: string;
+  products?: (string | Product)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products".
  */
 export interface Product {
@@ -168,6 +181,7 @@ export interface Product {
   slug: string;
   slugLock?: boolean | null;
   category: string | Category;
+  tags: (string | Tag)[];
   description?: string | null;
   price: number;
   image?: (string | null) | Media;
@@ -208,6 +222,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'category';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: string | Tag;
       } | null)
     | ({
         relationTo: 'products';
@@ -291,6 +309,16 @@ export interface CategorySelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  name?: T;
+  products?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "products_select".
  */
 export interface ProductsSelect<T extends boolean = true> {
@@ -298,6 +326,7 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   category?: T;
+  tags?: T;
   description?: T;
   price?: T;
   image?: T;

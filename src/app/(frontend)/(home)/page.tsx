@@ -1,14 +1,31 @@
-"use client";
-import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { loadProductFilters } from "@/modules/products/nuqs-filters";
+import { ProductList } from "@/modules/products/ui/components/product-list";
+import { HydrateClient, prefetch, trpcServer } from "@/trpc/server";
+import type { SearchParams } from "nuqs/server";
 
-export default function Home() {
-  const trpc = useTRPC();
-  const { data } = useQuery(trpc.auth.session.queryOptions());
+interface Props {
+  searchParams: Promise<SearchParams>;
+}
+
+export const dynamic = "force-dynamic";
+
+const HomePage = async ({ searchParams }: Props) => {
+  const filters = await loadProductFilters(searchParams);
+  void prefetch(
+    trpcServer.products.getMany.queryOptions({
+      categorySlug: "all",
+      ...filters,
+    }),
+    {
+      infiniteQuery: true,
+    }
+  );
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      {JSON.stringify(data?.user)}
-    </div>
+    <HydrateClient>
+      <ProductList />
+    </HydrateClient>
   );
-}
+};
+
+export default HomePage;

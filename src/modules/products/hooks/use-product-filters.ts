@@ -3,6 +3,7 @@ import { useQueryStates } from "nuqs";
 
 export const useProductFilters = () => {
   const [filters, setFilters] = useQueryStates(params);
+  console.log("FILTERS", filters);
 
   const hasFilters = Object.values(filters).some(Boolean);
 

@@ -11,6 +11,7 @@ import { appRouter } from "./routers/_app";
 // IMPORTANT: Create a stable getter for the query client that
 //            will return the same client during the same request.
 export const getQueryClient = cache(makeQueryClient);
+
 export const trpcServer = createTRPCOptionsProxy({
   ctx: createTRPCContext,
   router: appRouter,
@@ -30,10 +31,16 @@ export const trprcCaller = appRouter.createCaller(createTRPCContext);
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
-  queryOptions: T
+  queryOptions: T,
+  opts?: { infiniteQuery?: boolean }
 ) {
   const queryClient = getQueryClient();
-  if (queryOptions.queryKey[1]?.type === "infinite") {
+
+  const isActuallyInfinite =
+    opts?.infiniteQuery || queryOptions.queryKey[1]?.type === "infinite";
+
+  if (isActuallyInfinite) {
+    console.log("prefetching infinite query");
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     void queryClient.prefetchInfiniteQuery(queryOptions as any);
   } else {

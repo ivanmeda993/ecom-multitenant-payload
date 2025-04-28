@@ -23,7 +23,16 @@ export const Products: CollectionConfig = {
       hasMany: false,
       required: true,
     },
-
+    {
+      name: "tags",
+      type: "relationship",
+      relationTo: "tags",
+      admin: {
+        position: "sidebar",
+      },
+      hasMany: true,
+      required: true,
+    },
     {
       name: "description",
       type: "text",
