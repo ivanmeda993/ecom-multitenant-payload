@@ -134,3 +134,103 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     </div>
   );
 };
+
+export const ProductViewSkeleton = () => {
+  return (
+    <div className="px-4 lg:px-12 py-10 animate-pulse">
+      <div className="border rounded-sm bg-white overflow-hidden">
+        {/* Placeholder za sliku */}
+        <div className="aspect-[2.5] bg-gray-200" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-6">
+          <div className="col-span-4">
+            <div className="p-6">
+              {/* Placeholder za naslov */}
+              <div className="h-10 bg-gray-200 rounded w-3/4 mb-4" />
+            </div>
+
+            <div className="border-y flex">
+              {/* Placeholder za informacije o prodavcu */}
+              <div className="px-6 py-4 flex items-center justify-center lg:border-r">
+                <div className="flex items-center gap-2">
+                  <div className="size-[30px] rounded-full bg-gray-200 shrink-0" />
+                  <div className="h-4 bg-gray-200 rounded w-24" />
+                </div>
+              </div>
+              {/* Placeholder za cenu */}
+              <div className="px-6 py-4 flex items-center justify-center border-r">
+                <div className="h-6 bg-gray-200 rounded w-20" />
+              </div>
+              {/* Placeholder za rejting (desktop) */}
+              <div className="hidden lg:flex px-6 py-4 items-center justify-center">
+                <div className="flex items-center gap-1">
+                  {/* Placeholder zvezdice */}
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <StarIcon key={i} className="size-5 text-gray-300" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Placeholder za rejting (mobile) */}
+            <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
+              <div className="flex items-center gap-1">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <StarIcon key={i} className="size-5 text-gray-300" />
+                  ))}
+                </div>
+                <div className="h-4 bg-gray-200 rounded w-16" />
+              </div>
+            </div>
+            {/* Placeholder za opis */}
+            <div className="p-6 space-y-3">
+              <div className="h-4 bg-gray-200 rounded w-full" />
+              <div className="h-4 bg-gray-200 rounded w-full" />
+              <div className="h-4 bg-gray-200 rounded w-5/6" />
+            </div>
+          </div>
+
+          <div className="col-span-2">
+            <div className="border-t lg:border-t-0 lg:border-l h-full">
+              <div className="flex flex-col gap-4 p-5 border-b">
+                {/* Placeholder za dugmad */}
+                <div className="flex flex-row items-center gap-2">
+                  <Button className="flex-1 h-12 bg-gray-200" disabled />
+                  <Button className="size-12 bg-gray-200" disabled>
+                    <LinkIcon className="text-gray-400" />
+                  </Button>
+                </div>
+                {/* Placeholder za refund policy */}
+                <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto" />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  {/* Placeholder za naslov rejtinga */}
+                  <div className="h-6 bg-gray-200 rounded w-24" />
+                  {/* Placeholder za ukupan rejting */}
+                  <div className="flex items-center gap-x-1">
+                    <StarIcon className="size-4 text-gray-300" />
+                    <div className="h-4 bg-gray-200 rounded w-16" />
+                  </div>
+                </div>
+                {/* Placeholder za progress barove rejtinga */}
+                <div className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4">
+                  {[5, 4, 3, 2, 1].map((rating) => (
+                    <Fragment key={rating}>
+                      <div className="h-4 bg-gray-200 rounded w-16" />
+                      <Progress value={0} className="h-[1lh] bg-gray-200" />
+                      <div className="h-4 bg-gray-200 rounded w-8" />
+                    </Fragment>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

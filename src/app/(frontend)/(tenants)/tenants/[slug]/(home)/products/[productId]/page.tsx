@@ -1,6 +1,10 @@
-import { ProductView } from "@/modules/products/ui/views/product-view";
+import {
+  ProductView,
+  ProductViewSkeleton,
+} from "@/modules/products/ui/views/product-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
+import { Suspense } from "react";
 
 interface ProductPageProps {
   searchParams: Promise<SearchParams>;
@@ -22,7 +26,9 @@ const ProductPage = async ({ params }: ProductPageProps) => {
 
   return (
     <HydrateClient>
-      <ProductView tenantSlug={slug} productId={productId} />
+      <Suspense fallback={<ProductViewSkeleton />}>
+        <ProductView tenantSlug={slug} productId={productId} />
+      </Suspense>
     </HydrateClient>
   );
 };
