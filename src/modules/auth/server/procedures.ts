@@ -35,9 +35,25 @@ export const authRouter = createTRPCRouter({
         });
       }
 
+      const tenant = await payload.create({
+        collection: "tenants",
+        data: {
+          name: input.username,
+          slug: input.username,
+          stipeAccountId: "test",
+        },
+      });
+
       await payload.create({
         collection: "users",
-        data: input,
+        data: {
+          ...input,
+          tenants: [
+            {
+              tenant: tenant.id,
+            },
+          ],
+        },
       });
       const data = await payload.login({
         collection: "users",

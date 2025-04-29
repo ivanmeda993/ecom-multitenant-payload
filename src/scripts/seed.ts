@@ -1,11 +1,7 @@
-import payloadConfig from "@payload-config";
+import config from "@/payload.config";
 import { getPayload } from "payload";
 
 const categories = [
-  {
-    name: "All",
-    slug: "all",
-  },
   {
     name: "Business & Money",
     color: "#FFB347",
@@ -138,11 +134,37 @@ const categories = [
 ];
 
 const seed = async () => {
-  const payload = await getPayload({ config: payloadConfig });
+  const payload = await getPayload({ config });
+
+  const adminTenant = await payload.create({
+    collection: "tenants",
+    data: {
+      name: "admin",
+      slug: "admin",
+      stipeAccountId: "acct_1H29922eZvKYlo2C",
+      stripeDetailsSubmitted: true,
+    },
+  });
+
+  // create admin user
+  await payload.create({
+    collection: "users",
+    data: {
+      email: "admin@gmail.com",
+      username: "admin",
+      password: "Test1234!",
+      roles: ["super-admin"],
+      tenants: [
+        {
+          tenant: adminTenant.id,
+        },
+      ],
+    },
+  });
 
   for (const category of categories) {
-    const parrentCategory = await payload.create({
-      collection: "category",
+    const parentCategory = await payload.create({
+      collection: "categories",
       data: {
         name: category.name,
         slug: category.slug,
@@ -151,19 +173,24 @@ const seed = async () => {
       },
     });
 
-    for (const subcategory of category.subcategories || []) {
+    for (const subCategory of category.subcategories || []) {
       await payload.create({
-        collection: "category",
+        collection: "categories",
         data: {
-          name: subcategory.name,
-          slug: subcategory.slug,
-          parent: parrentCategory.id,
+          name: subCategory.name,
+          slug: subCategory.slug,
+          parent: parentCategory.id,
         },
       });
     }
   }
 };
 
-await seed();
-
-process.exit(0);
+try {
+  await seed();
+  console.log("Seeding completed");
+  process.exit(0);
+} catch (error) {
+  console.error("Error seeding:", error);
+  process.exit(1);
+}

@@ -68,24 +68,26 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
-    category: Category;
-    tags: Tag;
+    tenants: Tenant;
     products: Product;
+    categories: Category;
+    tags: Tag;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
-    category: {
-      subcategories: 'category';
+    categories: {
+      subcategories: 'categories';
     };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
-    category: CategorySelect<false> | CategorySelect<true>;
-    tags: TagsSelect<false> | TagsSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -130,6 +132,13 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   username: string;
+  roles?: ('super-admin' | 'user')[] | null;
+  tenants?:
+    | {
+        tenant: string | Tenant;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -143,7 +152,68 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "category".
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  /**
+   * This is the name of the store (e.g. jhon doe's Store)
+   */
+  name: string;
+  /**
+   * This is the subdomain for the stor (e.g. jhon-doe.funroad.com)
+   */
+  slug: string;
+  image?: (string | null) | Media;
+  stipeAccountId: string;
+  /**
+   * You cannot create products until you submit your Stripe details
+   */
+  stripeDetailsSubmitted?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
+  slug: string;
+  slugLock?: boolean | null;
+  categories: string | Category;
+  tags: (string | Tag)[];
+  description?: string | null;
+  price: number;
+  image: string | Media;
+  refundPolicy?: ('30-days' | '14-days' | '7-days' | '3-days' | '1-day' | 'no-refund') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
  */
 export interface Category {
   id: string;
@@ -173,43 +243,6 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  slugLock?: boolean | null;
-  category: string | Category;
-  tags: (string | Tag)[];
-  description?: string | null;
-  price: number;
-  image: string | Media;
-  refundPolicy?: ('30-days' | '14-days' | '7-days' | '3-days' | '1-day' | 'no-refund') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -220,16 +253,20 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
-        relationTo: 'category';
+        relationTo: 'tenants';
+        value: string | Tenant;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
+      } | null)
+    | ({
+        relationTo: 'categories';
         value: string | Category;
       } | null)
     | ({
         relationTo: 'tags';
         value: string | Tag;
-      } | null)
-    | ({
-        relationTo: 'products';
-        value: string | Product;
       } | null)
     | ({
         relationTo: 'media';
@@ -283,6 +320,13 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   username?: T;
+  roles?: T;
+  tenants?:
+    | T
+    | {
+        tenant?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -295,9 +339,40 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "category_select".
+ * via the `definition` "tenants_select".
  */
-export interface CategorySelect<T extends boolean = true> {
+export interface TenantsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  image?: T;
+  stipeAccountId?: T;
+  stripeDetailsSubmitted?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  tenant?: T;
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  categories?: T;
+  tags?: T;
+  description?: T;
+  price?: T;
+  image?: T;
+  refundPolicy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   slugLock?: T;
@@ -314,23 +389,6 @@ export interface CategorySelect<T extends boolean = true> {
 export interface TagsSelect<T extends boolean = true> {
   name?: T;
   products?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
- */
-export interface ProductsSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  slugLock?: T;
-  category?: T;
-  tags?: T;
-  description?: T;
-  price?: T;
-  image?: T;
-  refundPolicy?: T;
   updatedAt?: T;
   createdAt?: T;
 }

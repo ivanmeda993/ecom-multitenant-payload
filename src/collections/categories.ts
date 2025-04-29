@@ -2,7 +2,7 @@ import { slugField } from "@/fields/slug/slug-field";
 import type { CollectionConfig } from "payload";
 
 export const Categories: CollectionConfig = {
-  slug: "category",
+  slug: "categories",
   admin: {
     useAsTitle: "name",
   },
@@ -21,13 +21,13 @@ export const Categories: CollectionConfig = {
     {
       name: "parent",
       type: "relationship",
-      relationTo: "category",
+      relationTo: "categories",
       hasMany: false,
     },
     {
       name: "subcategories",
       type: "join",
-      collection: "category",
+      collection: "categories",
       on: "parent",
       hasMany: true,
     },

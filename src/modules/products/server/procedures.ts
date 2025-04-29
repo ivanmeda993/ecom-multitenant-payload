@@ -37,7 +37,7 @@ export const productsRouter = createTRPCRouter({
 
       if (input.categorySlug) {
         const categoriesData = await payload.find({
-          collection: "category",
+          collection: "categories",
           limit: 1,
           depth: 1,
           pagination: false,

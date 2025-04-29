@@ -14,9 +14,9 @@ export const Products: CollectionConfig = {
     },
     ...slugField(),
     {
-      name: "category",
+      name: "categories",
       type: "relationship",
-      relationTo: "category",
+      relationTo: "categories",
       admin: {
         position: "sidebar",
       },

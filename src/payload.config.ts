@@ -4,14 +4,16 @@ import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildConfig } from "payload";
+import { type Config, buildConfig } from "payload";
 import sharp from "sharp";
 
 import { Products } from "@/collections/products";
 import { Tags } from "@/collections/tags";
+import { Tenants } from "@/collections/tenants";
 import { COOKIE_PREFIX } from "@/constants";
 import { defaultLexical } from "@/fields/default-lexical";
 import { getServerSideURL } from "@/lib/get-url";
+import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import { Categories } from "./collections/categories";
 import { Media } from "./collections/media";
 import { Users } from "./collections/users";
@@ -28,7 +30,7 @@ const payloadConfig = buildConfig({
   },
   // IMPORTANT: this is the prefix for all cookies
   cookiePrefix: COOKIE_PREFIX,
-  collections: [Users, Categories, Tags, Products, Media],
+  collections: [Users, Tenants, Products, Categories, Tags, Media],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -48,7 +50,16 @@ const payloadConfig = buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   sharp,
   plugins: [
-    // storage-adapter-placeholder
+    multiTenantPlugin<Config>({
+      collections: {
+        products: {},
+      },
+      tenantsArrayField: {
+        includeDefaultField: false,
+      },
+      userHasAccessToAllTenants: (user) =>
+        Boolean(user?.roles?.includes("super-admin")),
+    }),
     vercelBlobStorage({
       enabled: true, // Optional, defaults to true
       // Specify which collections should use Vercel Blob
