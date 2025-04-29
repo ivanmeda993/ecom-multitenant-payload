@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { DEFAULT_PAGE_LIMIT } from "@/constants";
 import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
 import {
   ProductCard,
@@ -41,7 +40,7 @@ export const ProductList = ({ category }: ProductListProps) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:gric-cols-4  gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  gap-4">
         {data?.pages
           .flatMap((page) => page.docs)
           .map((product) => (
@@ -75,8 +74,8 @@ export const ProductList = ({ category }: ProductListProps) => {
 
 export const ProductListSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:gric-cols-4  gap-4">
-      {[...Array(DEFAULT_PAGE_LIMIT)].map((_, index) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  gap-4">
+      {[...new Array(4)].map((_, index) => (
         <ProductCardSkeleton key={index} />
       ))}
     </div>

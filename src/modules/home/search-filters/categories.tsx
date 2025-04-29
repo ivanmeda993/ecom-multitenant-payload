@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import type { CategoriesGetManyOutput } from "@/modules/categories/types";
 import { ListFilterIcon } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { CategoryDropdown } from "./category-dropdown";
 
@@ -46,7 +46,7 @@ export const Categories = ({ data }: CategoriesProps) => {
   const isCategoryHidden =
     activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const calculateVisible = () => {
       if (!containerRef.current || !measureRef.current || !viewAllRef.current)
         return;
@@ -111,7 +111,7 @@ export const Categories = ({ data }: CategoriesProps) => {
       {/* Visible container */}
       {/* biome-ignore lint/nursery/noStaticElementInteractions: <explanation> */}
       <div
-        className="flex flex-nowrap items-center"
+        className="flex flex-nowrap items-center overflow-hidden"
         ref={containerRef}
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}

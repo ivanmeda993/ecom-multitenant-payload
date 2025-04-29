@@ -29,7 +29,7 @@ export const SearchFilters = () => {
       style={{ backgroundColor: "#F5F5F5" }}
     >
       <SearchInput />
-      <div className="hidden lg:block">
+      <div className="hidden lg:block overflow-hidden">
         <Categories data={data} />
       </div>
       <BreadcrumbsNavigation
