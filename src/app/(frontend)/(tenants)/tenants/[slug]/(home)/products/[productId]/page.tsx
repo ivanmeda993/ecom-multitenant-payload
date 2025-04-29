@@ -6,6 +6,8 @@ import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
 
+export const experimental_ppr = true;
+
 interface ProductPageProps {
   searchParams: Promise<SearchParams>;
   params: Promise<{

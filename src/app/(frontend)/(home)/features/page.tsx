@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const experimental_ppr = true;
 
 const FeaturesPage = () => {
   return <div>FeaturesPage</div>;

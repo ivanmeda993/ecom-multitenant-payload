@@ -1,14 +1,11 @@
-"use client";
+// "use client";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { NavbarSidebar } from "@/modules/home/layout/navbar-sidebar";
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { UserButtons } from "@/modules/home/layout/user-buttons";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Suspense } from "react";
 
 const NAVBAR_ITEMS = [
   {
@@ -33,12 +30,11 @@ const NAVBAR_ITEMS = [
   },
 ];
 
-export const Navbar = () => {
-  const pathname = usePathname();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+export const experimental_ppr = true;
 
-  const trpc = useTRPC();
-  const { data: session } = useSuspenseQuery(trpc.auth.session.queryOptions());
+export const Navbar = () => {
+  // const pathname = usePathname();
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <nav className="flex h-20 justify-between border-b bg-white font-medium">
@@ -47,59 +43,25 @@ export const Navbar = () => {
       {/* Descktop */}
       <div className="hidden items-center gap-4 lg:flex">
         {NAVBAR_ITEMS.map((item) => (
-          <NavbarItem
-            key={item.href}
-            isActive={pathname === item.href}
-            {...item}
-          />
+          <NavbarItem key={item.href} isActive={false} {...item} />
         ))}
       </div>
 
       {/* Mobile */}
-      <NavbarSidebar
-        items={NAVBAR_ITEMS}
-        open={isSidebarOpen}
-        onOpenChange={setIsSidebarOpen}
-        hasSession={!!session}
-      />
-
-      <div className="hidden lg:min-w-[343px] lg:flex items-center justify-end">
-        {session?.user ? (
-          <Button
-            asChild
-            variant="secondary"
-            className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-violet-500 hover:text-black"
-          >
-            <Link href="/admin">Dashboard</Link>
-          </Button>
-        ) : (
-          <div className="hidden lg:flex h-full">
-            <Button
-              asChild
-              variant="secondary"
-              className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-violet-500"
-            >
-              <Link prefetch href="/sign-in">
-                Log in
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="secondary"
-              className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-violet-500 hover:text-black"
-            >
-              <Link prefetch href="/sign-up">
-                Start Selling
-              </Link>
-            </Button>
-          </div>
-        )}
-      </div>
+      {/*<NavbarSidebar*/}
+      {/*  items={NAVBAR_ITEMS}*/}
+      {/*  open={false}*/}
+      {/*  onOpenChange={setIsSidebarOpen}*/}
+      {/*  hasSession={false}*/}
+      {/*/>*/}
+      <Suspense fallback={<div>loading</div>}>
+        <UserButtons />
+      </Suspense>
       <div className="flex items-center justify-center lg:hidden">
         <Button
           variant="ghost"
           className="size-12 border-transparent bg-white"
-          onClick={() => setIsSidebarOpen(true)}
+          // onClick={() => setIsSidebarOpen(true)}
         >
           <MenuIcon />
           <span className="sr-only">Menu</span>
