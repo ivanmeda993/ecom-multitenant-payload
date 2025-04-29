@@ -141,7 +141,13 @@ export const NavbarSkeleton = () => {
       </div>
       <div className="hidden lg:min-w-[343px] lg:flex items-center justify-end">
         {Array.from({ length: 2 }).map((_, i) => (
-          <div key={i} className="h-10 w-24 rounded-full bg-gray-200" />
+          <Button
+            key={i}
+            variant="secondary"
+            className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-violet-500 hover:text-black"
+          >
+            Start Selling
+          </Button>
         ))}
       </div>
     </nav>
