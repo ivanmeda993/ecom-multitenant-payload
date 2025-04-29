@@ -42,11 +42,14 @@ export const ProductCard = ({
   return (
     <Link href={`/products/${id}}`}>
       <div className="flex flex-col border rounded-md bg-white overflow-hidden h-full hover:shadow-lg transition-shadow duration-200">
-        <ImageMedia
-          resource={productImage}
-          className="h-full w-full aspect-square object-cover"
-          priority
-        />
+        <div className="aspect-square relative">
+          <ImageMedia
+            resource={productImage}
+            fill
+            priority
+            size="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 300px"
+          />
+        </div>
         <div className="p-4 border-y flex flex-col gap-2 flex-1">
           <h2 className="text-lg font-medium line-clamp-4">{name}</h2>
           <div className="flex items-center gap-2 justify-between w-full">
@@ -75,7 +78,8 @@ export const ProductCard = ({
             {authorAvatar && (
               <ImageMedia
                 resource={authorAvatar}
-                className="size-[20px] rounded-full border shrink-0"
+                className="size-[20px] rounded-full border shrink-0 object-cover"
+                size="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 20px"
               />
             )}
 

@@ -4,7 +4,7 @@ import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { type Config, buildConfig } from "payload";
+import { buildConfig } from "payload";
 import sharp from "sharp";
 
 import { Products } from "@/collections/products";
@@ -13,6 +13,7 @@ import { Tenants } from "@/collections/tenants";
 import { COOKIE_PREFIX } from "@/constants";
 import { defaultLexical } from "@/fields/default-lexical";
 import { getServerSideURL } from "@/lib/get-url";
+import type { Config } from "@/payload-types";
 import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
 import { Categories } from "./collections/categories";
 import { Media } from "./collections/media";
