@@ -71,7 +71,7 @@ export const productsRouter = createTRPCRouter({
           },
         });
 
-        const subcategories = [];
+        const subcategories: string[] = [];
         const parentCategory = categoriesData.docs[0];
         if (parentCategory) {
           if (
@@ -79,9 +79,10 @@ export const productsRouter = createTRPCRouter({
             parentCategory?.subcategories?.docs.length > 0
           ) {
             subcategories.push(
-              ...parentCategory.subcategories.docs.map(
-                (subcategory) =>
-                  typeof subcategory === "object" && subcategory.slug
+              ...parentCategory.subcategories.docs.map((subcategory) =>
+                typeof subcategory === "object" && subcategory.slug
+                  ? subcategory.slug
+                  : ""
               )
             );
           }

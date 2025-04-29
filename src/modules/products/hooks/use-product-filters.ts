@@ -20,9 +20,7 @@ export const useProductFilters = () => {
 
   const resetFilters = async () => {
     await setFilters(
-      Object.fromEntries(
-        Object.entries(filters).map(([key, value]) => [key, null])
-      )
+      Object.fromEntries(Object.entries(filters).map(([key]) => [key, null]))
     );
   };
 

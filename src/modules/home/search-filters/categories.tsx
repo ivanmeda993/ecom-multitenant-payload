@@ -71,7 +71,6 @@ export const Categories = ({ data }: CategoriesProps) => {
     };
 
     const resizeObserver = new ResizeObserver(calculateVisible);
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
     resizeObserver.observe(containerRef.current!);
 
     return () => {

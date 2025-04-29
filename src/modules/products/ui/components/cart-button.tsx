@@ -20,7 +20,7 @@ export const CartButton = ({
 
   if (!hasHydrated) {
     // Optionally, return a placeholder or skeleton button while hydrating
-    return <Button className={cn("flex-1 h-12")} disabled />; 
+    return <Button className={cn("flex-1 h-12")} disabled />;
   }
 
   if (isPurchased) {

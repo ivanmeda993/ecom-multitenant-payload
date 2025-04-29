@@ -1,0 +1,14 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# tRPC Structure
+
+This project uses tRPC for type-safe API communication.
+
+- **Initialization:** Core tRPC setup is in [`src/trpc/init.ts`](mdc:src/trpc/init.ts).
+- **Server:** The tRPC server setup (including context creation) is in [`src/trpc/server.tsx`](mdc:src/trpc/server.tsx).
+- **Client:** The tRPC client setup (for React components) is in [`src/trpc/client.tsx`](mdc:src/trpc/client.tsx).
+- **Query Client:** The React Query client used by tRPC is configured in [`src/trpc/query-client.ts`](mdc:src/trpc/query-client.ts).
+- **Routers:** tRPC procedures are defined in routers located within [`src/trpc/routers/`](mdc:src/trpc/routers). The main app router is [`src/trpc/routers/_app.ts`](mdc:src/trpc/routers/_app.ts).

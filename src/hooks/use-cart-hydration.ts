@@ -28,4 +28,4 @@ export const useCartHydration = () => {
   }, []);
 
   return hydrated;
-}; 
+};

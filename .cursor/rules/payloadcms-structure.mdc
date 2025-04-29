@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Payload CMS Structure
+
+Payload CMS is used for content management in this project.
+
+- **Main Configuration:** The central Payload configuration file is [`src/payload.config.ts`](mdc:src/payload.config.ts). This file defines globals, collections, plugins, etc.
+- **Collections:** Content types (collections) are defined as individual files within the [`src/collections/`](mdc:src/collections) directory. Key collections include:
+    - [`src/collections/users.ts`](mdc:src/collections/users.ts)
+    - [`src/collections/tenants.ts`](mdc:src/collections/tenants.ts)
+    - [`src/collections/products.ts`](mdc:src/collections/products.ts)
+    - [`src/collections/categories.ts`](mdc:src/collections/categories.ts)
+    - [`src/collections/tags.ts`](mdc:src/collections/tags.ts)
+    - [`src/collections/media.ts`](mdc:src/collections/media.ts)
+- **Reusable Fields:** Custom or reusable field definitions used across collections might be found in [`src/fields/`](mdc:src/fields).
+- **Generated Types:** TypeScript types generated based on the Payload schema are located in [`src/payload-types.ts`](mdc:src/payload-types.ts).

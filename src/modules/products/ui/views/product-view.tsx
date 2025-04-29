@@ -145,6 +145,7 @@ export const ProductViewSkeleton = () => {
                   <div className="h-4 bg-gray-200 rounded w-24" />
                 </div>
               </div>
+
               {/* Placeholder za cenu */}
               <div className="px-6 py-4 flex items-center justify-center border-r">
                 <div className="h-6 bg-gray-200 rounded w-20" />
@@ -154,7 +155,7 @@ export const ProductViewSkeleton = () => {
                 <div className="flex items-center gap-1">
                   {/* Placeholder zvezdice */}
                   <div className="flex">
-                    {[...Array(5)].map((_, i) => (
+                    {[...new Array(5)].map((_, i) => (
                       <StarIcon key={i} className="size-5 text-gray-300" />
                     ))}
                   </div>
@@ -166,7 +167,7 @@ export const ProductViewSkeleton = () => {
             <div className="block lg:hidden px-6 py-4 items-center justify-center border-b">
               <div className="flex items-center gap-1">
                 <div className="flex">
-                  {[...Array(5)].map((_, i) => (
+                  {[...new Array(5)].map((_, i) => (
                     <StarIcon key={i} className="size-5 text-gray-300" />
                   ))}
                 </div>
