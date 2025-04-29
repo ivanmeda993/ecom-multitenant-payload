@@ -7,7 +7,7 @@ import { formatAsCurrency } from "@/lib/format-as-currency";
 import { generateTenantsURL } from "@/lib/get-url";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { LinkIcon, StarIcon } from "lucide-react";
+import { LinkIcon, LoaderIcon, StarIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -17,9 +17,9 @@ const CartButton = dynamic(
   {
     ssr: false,
     loading: () => (
-      <Button className="flex-1 h-12" disabled>
-        Loading...
-      </Button>
+      <div className=" size-12 p-4 flex-1 flex items-center justify-center">
+        <LoaderIcon className="animate-spin" size={16} />
+      </div>
     ),
   }
 );

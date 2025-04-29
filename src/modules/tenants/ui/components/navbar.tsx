@@ -16,9 +16,9 @@ const CheckoutButton = dynamic(
   {
     ssr: false,
     loading: () => (
-      <Button className=" size-12" disabled>
+      <div className=" size-12 p-4 flex items-center justify-center">
         <LoaderIcon className="animate-spin" size={16} />
-      </Button>
+      </div>
     ),
   }
 );
