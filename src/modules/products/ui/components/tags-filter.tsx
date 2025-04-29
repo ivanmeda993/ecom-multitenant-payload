@@ -38,7 +38,7 @@ export const TagsFilter = ({ tags, onChange }: TagsFilterProps) => {
           <LoaderIcon className="size-4 animate-spin" />
         </div>
       ) : (
-        data?.pages.map((page, index) =>
+        data?.pages.map((page) =>
           page.docs.map((tag) => (
             <div
               key={tag.id}

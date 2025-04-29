@@ -43,7 +43,7 @@ export const ProductCard = ({
   };
 
   return (
-    <Link href={`${tenantURL}/products/${id}`}>
+    <Link href={`${tenantURL}/products/${id}`} prefetch>
       <div className="flex flex-col border rounded-md bg-white overflow-hidden h-full hover:shadow-lg transition-shadow duration-200">
         <ImageMedia
           resource={productImage}
