@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/modules/checkout/hooks/use-cart";
 import Link from "next/link";
@@ -14,7 +15,10 @@ export const CartButton = ({
   productId,
   isPurchased,
 }: CartButtonProps) => {
+  const isMounted = useIsMounted();
   const cart = useCart(tenantSlug);
+
+  if (!isMounted) return null;
 
   if (isPurchased) {
     return (

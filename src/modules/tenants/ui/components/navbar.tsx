@@ -2,26 +2,11 @@
 import { ImageMedia } from "@/components/media/image-media";
 import { Button } from "@/components/ui/button";
 import { generateTenantsURL } from "@/lib/get-url";
+import { CheckoutButton } from "@/modules/checkout/ui/components/checkout-button";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
-
-const CheckoutButton = dynamic(
-  () =>
-    import("@/modules/checkout/ui/components/checkout-button").then(
-      (mod) => mod.CheckoutButton
-    ),
-  {
-    ssr: false,
-    loading: () => (
-      <div className=" size-12 p-4 flex items-center justify-center">
-        <LoaderIcon className="animate-spin" size={16} />
-      </div>
-    ),
-  }
-);
 
 interface TenantsNavbarProps {
   slug: string;

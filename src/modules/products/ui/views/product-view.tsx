@@ -5,24 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatAsCurrency } from "@/lib/format-as-currency";
 import { generateTenantsURL } from "@/lib/get-url";
+import { CartButton } from "@/modules/products/ui/components/cart-button";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { LinkIcon, LoaderIcon, StarIcon } from "lucide-react";
-import dynamic from "next/dynamic";
+import { LinkIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
 import { Fragment } from "react";
-
-const CartButton = dynamic(
-  () => import("../components/cart-button").then((mod) => mod.CartButton),
-  {
-    ssr: false,
-    loading: () => (
-      <div className=" size-12 p-4 flex-1 flex items-center justify-center">
-        <LoaderIcon className="animate-spin" size={16} />
-      </div>
-    ),
-  }
-);
 
 interface ProductViewProps {
   productId: string;
