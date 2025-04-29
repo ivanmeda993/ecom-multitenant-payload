@@ -10,6 +10,7 @@ export const GET_MANY_PRODUCTS_INPUTS_SCHEMA = z.object({
   maxPrice: z.string().nullable().optional(),
   tags: z.array(z.string()).nullable().optional(),
   sort: z.enum(sortValues).nullable().optional(),
+  tenantSlug: z.string().nullable().optional(),
 });
 
 export type GetManyProductsInputs = z.infer<

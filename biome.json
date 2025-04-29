@@ -19,6 +19,7 @@
         "noDangerouslySetInnerHtml": "off"
       },
       "a11y": {
+        "useKeyWithClickEvents": "off",
         "useSemanticElements": "off",
         "noRedundantRoles": "off",
         "useFocusableInteractive": "off"

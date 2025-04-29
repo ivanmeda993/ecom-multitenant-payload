@@ -1,4 +1,5 @@
 import { GET_MANY_PRODUCTS_INPUTS_SCHEMA } from "@/modules/products/schema";
+import type { Media, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import type { Sort, Where } from "payload";
 
@@ -32,6 +33,12 @@ export const productsRouter = createTRPCRouter({
       } else if (input.maxPrice) {
         where.price = {
           less_than_equal: input.maxPrice,
+        };
+      }
+
+      if (input.tenantSlug) {
+        where["tenant.slug"] = {
+          equals: input.tenantSlug,
         };
       }
 
@@ -79,13 +86,20 @@ export const productsRouter = createTRPCRouter({
 
       const data = await payload.find({
         collection: "products",
-        depth: 1,
+        depth: 2,
         where,
         sort,
         page: input.cursor,
         limit: input.limit,
       });
 
-      return data;
+      return {
+        ...data,
+        docs: data.docs.map((doc) => ({
+          ...doc,
+          image: doc.image as Media | null,
+          tenant: doc.tenant as Tenant,
+        })),
+      };
     }),
 });

@@ -1,13 +1,17 @@
+"use client";
 import { ImageMedia } from "@/components/media/image-media";
 import { Skeleton } from "@/components/ui/skeleton";
+import { generateTenantsURL } from "@/lib/get-url";
 import type { MediaType } from "@/types";
 import { StarIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type ProductCardProps = {
   id: string;
   name: string;
   productImage: MediaType;
+  tenantSlug: string;
   authorUsername: string;
   authorAvatar?: MediaType;
   reviewRating: number;
@@ -16,6 +20,7 @@ type ProductCardProps = {
 };
 export const ProductCard = ({
   productImage,
+  tenantSlug,
   authorUsername,
   authorAvatar,
   reviewCount,
@@ -24,12 +29,23 @@ export const ProductCard = ({
   name,
   id,
 }: ProductCardProps) => {
+  const router = useRouter();
+
+  const handleClickAuthor = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    router.push(generateTenantsURL(tenantSlug));
+  };
   return (
     <Link href={`/products/${id}}`}>
       <div className="flex flex-col border rounded-md bg-white overflow-hidden h-full hover:shadow-lg transition-shadow duration-200">
         <ImageMedia
           resource={productImage}
           className="h-full w-full aspect-square object-cover"
+          priority
         />
         <div className="p-4 border-y flex flex-col gap-2 flex-1">
           <h2 className="text-lg font-medium line-clamp-4">{name}</h2>
@@ -51,12 +67,15 @@ export const ProductCard = ({
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            onClick={handleClickAuthor}
+            role="button"
+          >
             {authorAvatar && (
               <ImageMedia
                 resource={authorAvatar}
-                fill
-                className="size-[16px] rounded-full border shrink-0"
+                className="size-[20px] rounded-full border shrink-0"
               />
             )}
 
@@ -70,9 +89,9 @@ export const ProductCard = ({
 
 export const ProductCardSkeleton = () => {
   return (
-    <div className="flex flex-col border bg-white overflow-hidden h-full rounded-lg">
+    <div className="flex flex-col border bg-white overflow-hidden h-full rounded-md">
       {/* Image skeleton */}
-      <Skeleton className="w-full aspect-square bg-neutral-200" />
+      <Skeleton className="w-full aspect-square bg-neutral-200 rounded-none" />
 
       {/* Content area */}
       <div className="p-4 border-y flex flex-col gap-2 flex-1">

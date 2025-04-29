@@ -33,3 +33,7 @@ export const getClientSideURL = () => {
 
   return process.env.NEXT_PUBLIC_SERVER_URL || "";
 };
+
+export const generateTenantsURL = (tenant: string) => {
+  return `${getClientSideURL()}/tenants/${tenant}`;
+};
