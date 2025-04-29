@@ -31,25 +31,26 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const router = useRouter();
 
+  const tenantURL = generateTenantsURL(tenantSlug);
+
   const handleClickAuthor = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     e.preventDefault();
     e.stopPropagation();
 
-    router.push(generateTenantsURL(tenantSlug));
+    router.push(tenantURL);
   };
+
   return (
-    <Link href={`/products/${id}}`}>
+    <Link href={`${tenantURL}/products/${id}`}>
       <div className="flex flex-col border rounded-md bg-white overflow-hidden h-full hover:shadow-lg transition-shadow duration-200">
-        <div className="aspect-square relative">
-          <ImageMedia
-            resource={productImage}
-            fill
-            priority
-            size="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 300px"
-          />
-        </div>
+        <ImageMedia
+          resource={productImage}
+          priority
+          className="aspect-square "
+          size="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 384px"
+        />
         <div className="p-4 border-y flex flex-col gap-2 flex-1">
           <h2 className="text-lg font-medium line-clamp-4">{name}</h2>
           <div className="flex items-center gap-2 justify-between w-full">
@@ -83,7 +84,7 @@ export const ProductCard = ({
               />
             )}
 
-            <p className="text-sm underline font-medium">{authorUsername}</p>
+            <p className="text-md underline font-medium">{authorUsername}</p>
           </div>
         </div>
       </div>

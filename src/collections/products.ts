@@ -50,6 +50,20 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: "coverImage",
+      type: "upload",
+      relationTo: "media",
+      hasMany: false,
+      required: true,
+    },
+    {
+      name: "productImages",
+      type: "upload",
+      relationTo: "media",
+      hasMany: true,
+    },
+
+    {
       name: "refundPolicy",
       type: "select",
       options: [

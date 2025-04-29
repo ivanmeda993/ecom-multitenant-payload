@@ -1,9 +1,25 @@
-import { GET_MANY_PRODUCTS_INPUTS_SCHEMA } from "@/modules/products/schema";
+import {
+  GET_MANY_PRODUCTS_INPUTS_SCHEMA,
+  GET_ONE_PRODUCT_INPUTS_SCHEMA,
+} from "@/modules/products/schema";
 import type { Media, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import type { Sort, Where } from "payload";
 
 export const productsRouter = createTRPCRouter({
+  getOne: baseProcedure
+    .input(GET_ONE_PRODUCT_INPUTS_SCHEMA)
+    .query(async ({ ctx: { payload }, input }) => {
+      const product = await payload.findByID({
+        collection: "products",
+        id: input.id,
+      });
+
+      return {
+        ...product,
+        tenant: product.tenant as Tenant,
+      };
+    }),
   getMany: baseProcedure
     .input(GET_MANY_PRODUCTS_INPUTS_SCHEMA)
     .query(async ({ ctx: { payload }, input }) => {
@@ -70,7 +86,7 @@ export const productsRouter = createTRPCRouter({
             );
           }
 
-          where["category.slug"] = {
+          where["categories.slug"] = {
             in: [parentCategory.slug, ...subcategories],
           };
         }

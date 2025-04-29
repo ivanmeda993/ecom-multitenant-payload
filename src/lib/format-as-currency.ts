@@ -1,5 +1,5 @@
-export const formatAsCurrency = (value: string) => {
-  const numericValue = value.replace(/[^0-9.]/g, "");
+export const formatAsCurrency = (value: string | number) => {
+  const numericValue = value.toString().replace(/[^0-9.]/g, "");
 
   const parts = numericValue.split(".");
   const formatedValue = `${parts[0]}${parts.length > 1 ? `.${parts[1]?.slice(0, 2)}` : ""}`;

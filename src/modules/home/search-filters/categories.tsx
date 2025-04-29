@@ -80,7 +80,7 @@ export const Categories = ({ data }: CategoriesProps) => {
   }, [categoriesWithAll.length]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full ">
       {/* Categories sidebar */}
       <CategoriesSidebar
         isOpen={isSidebarOpen}
@@ -111,7 +111,7 @@ export const Categories = ({ data }: CategoriesProps) => {
       {/* Visible container */}
       {/* biome-ignore lint/nursery/noStaticElementInteractions: <explanation> */}
       <div
-        className="flex flex-nowrap items-center overflow-hidden"
+        className="flex flex-nowrap items-center "
         ref={containerRef}
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}

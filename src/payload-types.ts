@@ -207,6 +207,8 @@ export interface Product {
   description?: string | null;
   price: number;
   image: string | Media;
+  coverImage: string | Media;
+  productImages?: (string | Media)[] | null;
   refundPolicy?: ('30-days' | '14-days' | '7-days' | '3-days' | '1-day' | 'no-refund') | null;
   updatedAt: string;
   createdAt: string;
@@ -364,6 +366,8 @@ export interface ProductsSelect<T extends boolean = true> {
   description?: T;
   price?: T;
   image?: T;
+  coverImage?: T;
+  productImages?: T;
   refundPolicy?: T;
   updatedAt?: T;
   createdAt?: T;

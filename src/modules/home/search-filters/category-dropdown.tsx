@@ -55,7 +55,7 @@ export const CategoryDropdown = ({
         {hasSubcategories && isOpen && (
           <div
             className={cn(
-              "-bottom-3 -translate-x-1/2 absolute left-1/2 h-0 w-0 border-r-[10px] border-r-transparent border-b-[10px] border-b-black border-l-[10px] border-l-transparent opacity-0",
+              "-bottom-3 -translate-x-1/2 absolute left-1/2 h-0 w-0 border-r-[10px] border-r-transparent border-b-[10px] border-b-black border-l-[10px] border-l-transparent opacity-20",
               isOpen && "opacity-100"
             )}
           />

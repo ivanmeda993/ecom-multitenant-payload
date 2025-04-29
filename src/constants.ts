@@ -3,6 +3,9 @@ export const COOKIE_PREFIX = process.env.COOKIE_PREFIX ?? "";
 
 export const DEFAULT_PAGE_LIMIT = 8;
 
+export const MAX_RATING = 5;
+export const MIN_RATING = 0;
+
 export const CSS_VARIABLES = {
   breakpoints: {
     "3xl": 1920,
