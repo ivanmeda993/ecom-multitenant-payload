@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useIsMounted } from "@/hooks/use-is-mounted";
+import { useCartHydration } from "@/hooks/use-cart-hydration";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/modules/checkout/hooks/use-cart";
 import Link from "next/link";
@@ -15,10 +15,13 @@ export const CartButton = ({
   productId,
   isPurchased,
 }: CartButtonProps) => {
-  const isMounted = useIsMounted();
+  const hasHydrated = useCartHydration();
   const cart = useCart(tenantSlug);
 
-  if (!isMounted) return null;
+  if (!hasHydrated) {
+    // Optionally, return a placeholder or skeleton button while hydrating
+    return <Button className={cn("flex-1 h-12")} disabled />; 
+  }
 
   if (isPurchased) {
     return (
