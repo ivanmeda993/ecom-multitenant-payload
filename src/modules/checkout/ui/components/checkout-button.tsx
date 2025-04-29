@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { useCartHydration } from "@/hooks/use-cart-hydration";
 import { generateTenantsURL } from "@/lib/get-url";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/modules/checkout/hooks/use-cart";
 import { ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
+import { useCartStore } from "../../store/use-cart-store";
 
 interface CheckoutButtonProps {
   className?: string;
@@ -17,10 +16,11 @@ export const CheckoutButton = ({
   hideIfEmpty,
   tenantSlug,
 }: CheckoutButtonProps) => {
-  const hasHydrated = useCartHydration();
-  const { totalItems } = useCart(tenantSlug);
+  const totalItems = useCartStore(
+    (state) => state.tenantCarts[tenantSlug]?.productIds.length || 0
+  );
 
-  if ((hideIfEmpty && totalItems === 0) || !hasHydrated) return null;
+  if (hideIfEmpty && totalItems === 0) return null;
   return (
     <Button asChild className={cn(" h-12", className)}>
       <Link href={`${generateTenantsURL(tenantSlug)}/checkout`}>

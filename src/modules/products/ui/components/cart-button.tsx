@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { useCartHydration } from "@/hooks/use-cart-hydration";
 import { cn } from "@/lib/utils";
-import { useCart } from "@/modules/checkout/hooks/use-cart";
+import { useCartStore } from "@/modules/checkout/store/use-cart-store";
 import Link from "next/link";
 
 interface CartButtonProps {
@@ -15,13 +14,9 @@ export const CartButton = ({
   productId,
   isPurchased,
 }: CartButtonProps) => {
-  const hasHydrated = useCartHydration();
-  const cart = useCart(tenantSlug);
-
-  if (!hasHydrated) {
-    // Optionally, return a placeholder or skeleton button while hydrating
-    return <Button className={cn("flex-1 h-12")} disabled />;
-  }
+  const cart = useCartStore((state) => state.tenantCarts[tenantSlug]);
+  const addProduct = useCartStore((state) => state.addProduct);
+  const removeProduct = useCartStore((state) => state.removeProduct);
 
   if (isPurchased) {
     return (
@@ -36,10 +31,18 @@ export const CartButton = ({
   return (
     <Button
       className={cn("flex-1 h-12 ")}
-      variant={cart.isProductInCart(productId) ? "outline" : "default"}
-      onClick={() => cart.toggleProduct(productId)}
+      variant={cart?.productIds.includes(productId) ? "outline" : "default"}
+      onClick={() => {
+        if (cart?.productIds.includes(productId)) {
+          removeProduct(tenantSlug, productId);
+        } else {
+          addProduct(tenantSlug, productId);
+        }
+      }}
     >
-      {cart.isProductInCart(productId) ? "Remove form cart" : "Add to cart"}
+      {cart?.productIds.includes(productId)
+        ? "Remove from cart"
+        : "Add to cart"}
     </Button>
   );
 };
