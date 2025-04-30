@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CategoriesSidebar } from "@/modules/home/search-filters/categories-sidebar";
 import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { BookCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -13,7 +13,7 @@ interface SearchInputProps {
 }
 export const SearchInput = ({ disabled }: SearchInputProps) => {
   const trpc = useTRPC();
-  const { data: session, isPending } = useSuspenseQuery(
+  const { data: session, isPending } = useQuery(
     trpc.auth.session.queryOptions()
   );
 

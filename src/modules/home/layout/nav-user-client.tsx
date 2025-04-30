@@ -1,15 +1,20 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import Link from "next/link";
 
-export const UserButtons = () => {
-  const trpc = useTRPC();
-  const { data: session } = useSuspenseQuery(trpc.auth.session.queryOptions());
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+export const NavUserClient = () => {
+  const trpcClient = useTRPC();
+  const { data: session, isPending } = useQuery(
+    trpcClient.auth.session.queryOptions()
+  );
   return (
     <div className="hidden lg:min-w-[343px] lg:flex items-center justify-end">
-      {session?.user ? (
+      {isPending ? (
+        <Skeleton className="h-full w-full" />
+      ) : session?.user ? (
         <Button
           asChild
           variant="secondary"

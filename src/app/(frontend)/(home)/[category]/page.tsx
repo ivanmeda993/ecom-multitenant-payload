@@ -3,8 +3,7 @@ import { loadProductFilters } from "@/modules/products/nuqs-filters";
 import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
-
-export const experimental_ppr = true;
+import { Suspense } from "react";
 
 type CategoryPageProps = {
   params: Promise<{
@@ -12,6 +11,10 @@ type CategoryPageProps = {
   }>;
   searchParams: Promise<SearchParams>;
 };
+export const experimental_ppr = true;
+
+export const dynamic = "force-dynamic";
+
 const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   const { category } = await params;
   const filters = await loadProductFilters(searchParams);
@@ -27,7 +30,9 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
 
   return (
     <HydrateClient>
-      <ProductListView category={category} />
+      <Suspense fallback={<div>loading</div>}>
+        <ProductListView category={category} />
+      </Suspense>
     </HydrateClient>
   );
 };

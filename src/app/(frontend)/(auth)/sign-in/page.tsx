@@ -3,7 +3,6 @@ import { trprcCaller } from "@/trpc/server";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
-
 const SignInPage = async () => {
   const session = await trprcCaller.auth.session();
 

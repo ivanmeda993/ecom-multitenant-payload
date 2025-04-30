@@ -1,94 +1,24 @@
-// "use client";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { UserButtons } from "@/modules/home/layout/user-buttons";
-import { MenuIcon } from "lucide-react";
-import Link from "next/link";
-import { Suspense } from "react";
-
-const NAVBAR_ITEMS = [
-  {
-    href: "/",
-    children: "Home",
-  },
-  {
-    href: "/about",
-    children: "About",
-  },
-  {
-    href: "/contact",
-    children: "Contact",
-  },
-  {
-    href: "/features",
-    children: "Features",
-  },
-  {
-    href: "/pricing",
-    children: "Pricing",
-  },
-];
-
-export const experimental_ppr = true;
+import { NAVBAR_ITEMS } from "@/constants";
+import { NavbarItem } from "./nav-item";
+import { NavItems } from "./nav-items";
+import { NavUserClient } from "./nav-user-client";
+import { NavbarSidebar } from "./navbar-sidebar";
 
 export const Navbar = () => {
-  // const pathname = usePathname();
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
   return (
     <nav className="flex h-20 justify-between border-b bg-white font-medium">
       <Logo className="pl-6" />
 
-      {/* Descktop */}
-      <div className="hidden items-center gap-4 lg:flex">
-        {NAVBAR_ITEMS.map((item) => (
-          <NavbarItem key={item.href} isActive={false} {...item} />
-        ))}
-      </div>
+      <NavItems />
 
-      {/* Mobile */}
-      {/*<NavbarSidebar*/}
-      {/*  items={NAVBAR_ITEMS}*/}
-      {/*  open={false}*/}
-      {/*  onOpenChange={setIsSidebarOpen}*/}
-      {/*  hasSession={false}*/}
-      {/*/>*/}
-      <Suspense fallback={<div>loading</div>}>
-        <UserButtons />
-      </Suspense>
+      <NavUserClient />
+
       <div className="flex items-center justify-center lg:hidden">
-        <Button
-          variant="ghost"
-          className="size-12 border-transparent bg-white"
-          // onClick={() => setIsSidebarOpen(true)}
-        >
-          <MenuIcon />
-          <span className="sr-only">Menu</span>
-        </Button>
+        <NavbarSidebar items={NAVBAR_ITEMS} hasSession={false} />
       </div>
     </nav>
-  );
-};
-
-interface NavbarItemProps {
-  children: React.ReactNode;
-  isActive?: boolean;
-  href: string;
-}
-
-const NavbarItem = ({ children, isActive, href }: NavbarItemProps) => {
-  return (
-    <Button
-      asChild
-      variant="outline"
-      className={cn(
-        "rounded-full border-transparent bg-transparent px-3.5 text-lg shadow-none hover:border-primary hover:bg-transparent",
-        isActive && "bg-black text-white hover:bg-black hover:text-white"
-      )}
-    >
-      <Link href={href}>{children}</Link>
-    </Button>
   );
 };
 

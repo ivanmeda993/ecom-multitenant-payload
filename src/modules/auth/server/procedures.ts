@@ -1,16 +1,34 @@
+import { AUTH_COOKIE } from "@/constants";
+import { getClientSideURL } from "@/lib/get-url";
 import { LOGIN_SCHEMA, REGISTER_SCHEMA } from "@/modules/auth/schema";
 import { generateAuthCookie } from "@/modules/auth/utils";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { headers as getHeaders } from "next/headers";
+import { cookies as getCookies } from "next/headers";
+import type { User } from "payload";
 
 export const authRouter = createTRPCRouter({
-  session: baseProcedure.query(async ({ ctx: { payload } }) => {
-    const headers = await getHeaders();
+  session: baseProcedure.query(async () => {
+    const cookieStore = await getCookies();
+    const token = cookieStore.get(AUTH_COOKIE)?.value;
 
-    const session = await payload.auth({ headers });
+    const meUserReq = await fetch(`${getClientSideURL()}/api/users/me`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
+    });
 
-    return session;
+    const {
+      user,
+    }: {
+      user: User;
+    } = await meUserReq.json();
+
+    // Token will exist here because if it doesn't the user will be redirected
+    return {
+      token: token!,
+      user,
+    };
   }),
 
   register: baseProcedure

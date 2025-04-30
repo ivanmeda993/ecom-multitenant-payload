@@ -1,4 +1,5 @@
 import type React from "react";
+import { Suspense } from "react";
 import "./styles.css";
 import { Toaster } from "@/components/ui/sonner";
 import { TRPCReactProvider } from "@/trpc/client";
@@ -16,12 +17,14 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en">
       <body>
         <main>
-          <TRPCReactProvider>
-            <NuqsAdapter>
-              {children}
-              <Toaster />
-            </NuqsAdapter>
-          </TRPCReactProvider>
+          <Suspense>
+            <TRPCReactProvider>
+              <NuqsAdapter>
+                {children}
+                <Toaster />
+              </NuqsAdapter>
+            </TRPCReactProvider>
+          </Suspense>
         </main>
       </body>
     </html>

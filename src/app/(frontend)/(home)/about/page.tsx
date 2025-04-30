@@ -1,7 +1,10 @@
-export const experimental_ppr = true;
-
 const AboutPage = () => {
-  return <div>AboutPage</div>;
+  return (
+    <div>
+      {/* <NavbarServer /> */}
+      AboutPage
+    </div>
+  );
 };
 
 export default AboutPage;

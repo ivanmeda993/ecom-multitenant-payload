@@ -1,11 +1,16 @@
+"use client";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
+import { MenuIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface NavbarItem {
   href: string;
@@ -14,18 +19,28 @@ interface NavbarItem {
 
 interface NavbarSidebarProps {
   items: NavbarItem[];
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  // open: boolean;
+  // onOpenChange?: (open: boolean) => void;
   hasSession: boolean;
 }
 export const NavbarSidebar = ({
   items,
-  open,
-  onOpenChange,
+  // open,
+  // onOpenChange,
   hasSession,
 }: NavbarSidebarProps) => {
+  const [open, setOpen] = useState(false);
+  const onOpenChange = (open: boolean) => {
+    setOpen(open);
+  };
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetTrigger asChild className="lg:hidden bg-red-400">
+        <Button variant="ghost" className="size-12 border-transparent bg-white">
+          <MenuIcon />
+          <span className="sr-only">Menu</span>
+        </Button>
+      </SheetTrigger>
       <SheetContent side="left" className="p-0 transition-none">
         <SheetHeader className="border-b p-4">
           <SheetTitle>Menu</SheetTitle>

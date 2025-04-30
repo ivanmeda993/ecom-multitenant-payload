@@ -16,3 +16,26 @@ export const CSS_VARIABLES = {
     sm: 640,
   },
 };
+
+export const NAVBAR_ITEMS = [
+  {
+    href: "/",
+    children: "Home",
+  },
+  {
+    href: "/about",
+    children: "About",
+  },
+  {
+    href: "/contact",
+    children: "Contact",
+  },
+  {
+    href: "/features",
+    children: "Features",
+  },
+  {
+    href: "/pricing",
+    children: "Pricing",
+  },
+];

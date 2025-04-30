@@ -25,6 +25,7 @@ export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 
 export const baseProcedure = t.procedure.use(async ({ next }) => {
+  // await connection();
   const payload = await getPayload({ config: payloadConfig });
   return next({
     ctx: {
