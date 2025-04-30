@@ -1,134 +1,131 @@
 import config from "@/payload.config";
 import { getPayload } from "payload";
 
-const categories = [
+const dogBreeds = [
   {
-    name: "Business & Money",
+    name: "Retrievers",
     color: "#FFB347",
-    slug: "business-money",
+    slug: "retrievers",
     subcategories: [
-      { name: "Accounting", slug: "accounting" },
+      { name: "Golden Retriever", slug: "golden-retriever" },
+      { name: "Labrador Retriever", slug: "labrador-retriever" },
+      { name: "Chesapeake Bay Retriever", slug: "chesapeake-bay-retriever" },
+      { name: "Flat-Coated Retriever", slug: "flat-coated-retriever" },
       {
-        name: "Entrepreneurship",
-        slug: "entrepreneurship",
+        name: "Nova Scotia Duck Tolling Retriever",
+        slug: "nova-scotia-duck-tolling-retriever",
       },
-      { name: "Gigs & Side Projects", slug: "gigs-side-projects" },
-      { name: "Investing", slug: "investing" },
-      { name: "Management & Leadership", slug: "management-leadership" },
-      {
-        name: "Marketing & Sales",
-        slug: "marketing-sales",
-      },
-      { name: "Networking, Careers & Jobs", slug: "networking-careers-jobs" },
-      { name: "Personal Finance", slug: "personal-finance" },
-      { name: "Real Estate", slug: "real-estate" },
     ],
   },
   {
-    name: "Software Development",
+    name: "Shepherds",
     color: "#7EC8E3",
-    slug: "software-development",
+    slug: "shepherds",
     subcategories: [
-      { name: "Web Development", slug: "web-development" },
-      { name: "Mobile Development", slug: "mobile-development" },
-      { name: "Game Development", slug: "game-development" },
-      { name: "Programming Languages", slug: "programming-languages" },
-      { name: "DevOps", slug: "devops" },
+      { name: "German Shepherd", slug: "german-shepherd" },
+      { name: "Australian Shepherd", slug: "australian-shepherd" },
+      { name: "Belgian Shepherd", slug: "belgian-shepherd" },
+      { name: "Border Collie", slug: "border-collie" },
+      { name: "Shetland Sheepdog", slug: "shetland-sheepdog" },
     ],
   },
   {
-    name: "Writing & Publishing",
+    name: "Terriers",
     color: "#D8B5FF",
-    slug: "writing-publishing",
+    slug: "terriers",
     subcategories: [
-      { name: "Fiction", slug: "fiction" },
-      { name: "Non-Fiction", slug: "non-fiction" },
-      { name: "Blogging", slug: "blogging" },
-      { name: "Copywriting", slug: "copywriting" },
-      { name: "Self-Publishing", slug: "self-publishing" },
+      { name: "Jack Russell Terrier", slug: "jack-russell-terrier" },
+      { name: "Bull Terrier", slug: "bull-terrier" },
+      { name: "Yorkshire Terrier", slug: "yorkshire-terrier" },
+      {
+        name: "West Highland White Terrier",
+        slug: "west-highland-white-terrier",
+      },
+      { name: "Scottish Terrier", slug: "scottish-terrier" },
     ],
   },
   {
-    name: "Other",
-    slug: "other",
-  },
-  {
-    name: "Education",
+    name: "Hounds",
     color: "#FFE066",
-    slug: "education",
+    slug: "hounds",
     subcategories: [
-      { name: "Online Courses", slug: "online-courses" },
-      { name: "Tutoring", slug: "tutoring" },
-      { name: "Test Preparation", slug: "test-preparation" },
-      { name: "Language Learning", slug: "language-learning" },
+      { name: "Beagle", slug: "beagle" },
+      { name: "Basset Hound", slug: "basset-hound" },
+      { name: "Bloodhound", slug: "bloodhound" },
+      { name: "Greyhound", slug: "greyhound" },
+      { name: "Dachshund", slug: "dachshund" },
     ],
   },
   {
-    name: "Self Improvement",
+    name: "Sporting Dogs",
     color: "#96E6B3",
-    slug: "self-improvement",
+    slug: "sporting-dogs",
     subcategories: [
-      { name: "Productivity", slug: "productivity" },
-      { name: "Personal Development", slug: "personal-development" },
-      { name: "Mindfulness", slug: "mindfulness" },
-      { name: "Career Growth", slug: "career-growth" },
+      { name: "Pointer", slug: "pointer" },
+      { name: "Setter", slug: "setter" },
+      { name: "Spaniel", slug: "spaniel" },
+      { name: "Vizsla", slug: "vizsla" },
+      { name: "Weimaraner", slug: "weimaraner" },
     ],
   },
   {
-    name: "Fitness & Health",
+    name: "Working Dogs",
     color: "#FF9AA2",
-    slug: "fitness-health",
+    slug: "working-dogs",
     subcategories: [
-      { name: "Workout Plans", slug: "workout-plans" },
-      { name: "Nutrition", slug: "nutrition" },
-      { name: "Mental Health", slug: "mental-health" },
-      { name: "Yoga", slug: "yoga" },
+      { name: "Boxer", slug: "boxer" },
+      { name: "Doberman Pinscher", slug: "doberman-pinscher" },
+      { name: "Great Dane", slug: "great-dane" },
+      { name: "Rottweiler", slug: "rottweiler" },
+      { name: "Saint Bernard", slug: "saint-bernard" },
     ],
   },
   {
-    name: "Design",
+    name: "Toy Dogs",
     color: "#B5B9FF",
-    slug: "design",
+    slug: "toy-dogs",
     subcategories: [
-      { name: "UI/UX", slug: "ui-ux" },
-      { name: "Graphic Design", slug: "graphic-design" },
-      { name: "3D Modeling", slug: "3d-modeling" },
-      { name: "Typography", slug: "typography" },
+      { name: "Chihuahua", slug: "chihuahua" },
+      { name: "Pomeranian", slug: "pomeranian" },
+      { name: "Pug", slug: "pug" },
+      { name: "Shih Tzu", slug: "shih-tzu" },
+      { name: "Maltese", slug: "maltese" },
     ],
   },
   {
-    name: "Drawing & Painting",
+    name: "Non-Sporting Dogs",
     color: "#FFCAB0",
-    slug: "drawing-painting",
+    slug: "non-sporting-dogs",
     subcategories: [
-      { name: "Watercolor", slug: "watercolor" },
-      { name: "Acrylic", slug: "acrylic" },
-      { name: "Oil", slug: "oil" },
-      { name: "Pastel", slug: "pastel" },
-      { name: "Charcoal", slug: "charcoal" },
+      { name: "Bulldog", slug: "bulldog" },
+      { name: "Dalmatian", slug: "dalmatian" },
+      { name: "Poodle", slug: "poodle" },
+      { name: "Chow Chow", slug: "chow-chow" },
+      { name: "Bichon Frise", slug: "bichon-frise" },
     ],
   },
   {
-    name: "Music",
+    name: "Herding Dogs",
     color: "#FFD700",
-    slug: "music",
+    slug: "herding-dogs",
     subcategories: [
-      { name: "Songwriting", slug: "songwriting" },
-      { name: "Music Production", slug: "music-production" },
-      { name: "Music Theory", slug: "music-theory" },
-      { name: "Music History", slug: "music-history" },
+      { name: "Australian Cattle Dog", slug: "australian-cattle-dog" },
+      { name: "Pembroke Welsh Corgi", slug: "pembroke-welsh-corgi" },
+      { name: "Cardigan Welsh Corgi", slug: "cardigan-welsh-corgi" },
+      { name: "Old English Sheepdog", slug: "old-english-sheepdog" },
+      { name: "Collie", slug: "collie" },
     ],
   },
   {
-    name: "Photography",
+    name: "Mixed Breeds",
     color: "#FF6B6B",
-    slug: "photography",
+    slug: "mixed-breeds",
     subcategories: [
-      { name: "Portrait", slug: "portrait" },
-      { name: "Landscape", slug: "landscape" },
-      { name: "Street Photography", slug: "street-photography" },
-      { name: "Nature", slug: "nature" },
-      { name: "Macro", slug: "macro" },
+      { name: "Labradoodle", slug: "labradoodle" },
+      { name: "Goldendoodle", slug: "goldendoodle" },
+      { name: "Cockapoo", slug: "cockapoo" },
+      { name: "Puggle", slug: "puggle" },
+      { name: "Schnoodle", slug: "schnoodle" },
     ],
   },
 ];
@@ -162,24 +159,51 @@ const seed = async () => {
     },
   });
 
-  for (const category of categories) {
-    const parentCategory = await payload.create({
+  // Create dog breeder tenant
+  const breederTenant = await payload.create({
+    collection: "tenants",
+    data: {
+      name: "Premium Dog Breeders",
+      slug: "premium-dog-breeders",
+      stipeAccountId: "acct_1H29922eZvKYlo2C",
+      stripeDetailsSubmitted: true,
+    },
+  });
+
+  // Create breeder user
+  await payload.create({
+    collection: "users",
+    data: {
+      email: "breeder@example.com",
+      username: "breeder",
+      password: "Test1234!",
+      roles: ["user"],
+      tenants: [
+        {
+          tenant: breederTenant.id,
+        },
+      ],
+    },
+  });
+
+  for (const breed of dogBreeds) {
+    const parentBreed = await payload.create({
       collection: "categories",
       data: {
-        name: category.name,
-        slug: category.slug,
-        color: category.color,
+        name: breed.name,
+        slug: breed.slug,
+        color: breed.color,
         parent: null,
       },
     });
 
-    for (const subCategory of category.subcategories || []) {
+    for (const subBreed of breed.subcategories || []) {
       await payload.create({
         collection: "categories",
         data: {
-          name: subCategory.name,
-          slug: subCategory.slug,
-          parent: parentCategory.id,
+          name: subBreed.name,
+          slug: subBreed.slug,
+          parent: parentBreed.id,
         },
       });
     }

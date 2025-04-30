@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     tenants: Tenant;
-    products: Product;
+    dogs: Dog;
     categories: Category;
     tags: Tag;
     media: Media;
@@ -85,7 +85,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
-    products: ProductsSelect<false> | ProductsSelect<true>;
+    dogs: DogsSelect<false> | DogsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -167,7 +167,7 @@ export interface Tenant {
   image?: (string | null) | Media;
   stipeAccountId: string;
   /**
-   * You cannot create products until you submit your Stripe details
+   * You cannot create dogs until you submit your Stripe details
    */
   stripeDetailsSubmitted?: boolean | null;
   updatedAt: string;
@@ -194,21 +194,22 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
+ * via the `definition` "dogs".
  */
-export interface Product {
+export interface Dog {
   id: string;
   tenant?: (string | null) | Tenant;
   name: string;
   slug: string;
   slugLock?: boolean | null;
-  categories: string | Category;
+  breed: string | Category;
   tags: (string | Tag)[];
   description?: string | null;
+  age: number;
   price: number;
   image: string | Media;
   coverImage: string | Media;
-  productImages?: (string | Media)[] | null;
+  dogImages?: (string | Media)[] | null;
   refundPolicy?: ('30-days' | '14-days' | '7-days' | '3-days' | '1-day' | 'no-refund') | null;
   updatedAt: string;
   createdAt: string;
@@ -239,7 +240,6 @@ export interface Category {
 export interface Tag {
   id: string;
   name: string;
-  products?: (string | Product)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -259,8 +259,8 @@ export interface PayloadLockedDocument {
         value: string | Tenant;
       } | null)
     | ({
-        relationTo: 'products';
-        value: string | Product;
+        relationTo: 'dogs';
+        value: string | Dog;
       } | null)
     | ({
         relationTo: 'categories';
@@ -354,20 +354,21 @@ export interface TenantsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
+ * via the `definition` "dogs_select".
  */
-export interface ProductsSelect<T extends boolean = true> {
+export interface DogsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
   slug?: T;
   slugLock?: T;
-  categories?: T;
+  breed?: T;
   tags?: T;
   description?: T;
+  age?: T;
   price?: T;
   image?: T;
   coverImage?: T;
-  productImages?: T;
+  dogImages?: T;
   refundPolicy?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -392,7 +393,6 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface TagsSelect<T extends boolean = true> {
   name?: T;
-  products?: T;
   updatedAt?: T;
   createdAt?: T;
 }

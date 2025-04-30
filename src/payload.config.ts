@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
-import { Products } from "@/collections/products";
+import { Dogs } from "@/collections/dogs";
 import { Tags } from "@/collections/tags";
 import { Tenants } from "@/collections/tenants";
 import { COOKIE_PREFIX } from "@/constants";
@@ -31,7 +31,7 @@ const payloadConfig = buildConfig({
   },
   // IMPORTANT: this is the prefix for all cookies
   cookiePrefix: COOKIE_PREFIX,
-  collections: [Users, Tenants, Products, Categories, Tags, Media],
+  collections: [Users, Tenants, Dogs, Categories, Tags, Media],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -53,7 +53,7 @@ const payloadConfig = buildConfig({
   plugins: [
     multiTenantPlugin<Config>({
       collections: {
-        products: {},
+        dogs: {},
       },
       tenantsArrayField: {
         includeDefaultField: false,

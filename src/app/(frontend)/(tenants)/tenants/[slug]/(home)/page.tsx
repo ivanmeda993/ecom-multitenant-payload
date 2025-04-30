@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_LIMIT } from "@/constants";
-import { loadProductFilters } from "@/modules/products/nuqs-filters";
-import { ProductListView } from "@/modules/products/ui/views/product-list-view";
+import { loadDogFilters } from "@/modules/dogs/nuqs-filters";
+import { DogListView } from "@/modules/dogs/ui/views/dog-list-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 
@@ -14,11 +14,11 @@ interface TenantsProps {
 }
 const Tenants = async ({ params, searchParams }: TenantsProps) => {
   const { slug } = await params;
-  const filters = await loadProductFilters(searchParams);
+  const filters = await loadDogFilters(searchParams);
 
   const queryClient = getQueryClient();
   void queryClient.prefetchInfiniteQuery(
-    trpcServer.products.getMany.infiniteQueryOptions({
+    trpcServer.dogs.getMany.infiniteQueryOptions({
       ...filters,
       tenantSlug: slug,
       limit: DEFAULT_PAGE_LIMIT,
@@ -27,7 +27,7 @@ const Tenants = async ({ params, searchParams }: TenantsProps) => {
 
   return (
     <HydrateClient>
-      <ProductListView tenant={slug} narrowView />
+      <DogListView tenant={slug} narrowView />
     </HydrateClient>
   );
 };

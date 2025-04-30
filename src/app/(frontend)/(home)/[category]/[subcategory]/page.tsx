@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_LIMIT } from "@/constants";
-import { loadProductFilters } from "@/modules/products/nuqs-filters";
-import { ProductListView } from "@/modules/products/ui/views/product-list-view";
+import { loadDogFilters } from "@/modules/dogs/nuqs-filters";
+import { DogListView } from "@/modules/dogs/ui/views/dog-list-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
@@ -19,11 +19,11 @@ const SubCategoryPage = async ({
   searchParams,
 }: SubCategoryPageProps) => {
   const { subcategory } = await params;
-  const filters = await loadProductFilters(searchParams);
+  const filters = await loadDogFilters(searchParams);
 
   const queryClient = getQueryClient();
   void queryClient.prefetchInfiniteQuery(
-    trpcServer.products.getMany.infiniteQueryOptions({
+    trpcServer.dogs.getMany.infiniteQueryOptions({
       ...filters,
       categorySlug: subcategory,
       limit: DEFAULT_PAGE_LIMIT,
@@ -32,7 +32,7 @@ const SubCategoryPage = async ({
   return (
     <HydrateClient>
       <Suspense fallback={<div>loading</div>}>
-        <ProductListView category={subcategory} />
+        <DogListView category={subcategory} />
       </Suspense>
     </HydrateClient>
   );

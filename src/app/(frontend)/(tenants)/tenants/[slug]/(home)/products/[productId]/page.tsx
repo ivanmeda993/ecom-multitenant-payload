@@ -1,35 +1,35 @@
 import {
-  ProductView,
-  ProductViewSkeleton,
-} from "@/modules/products/ui/views/product-view";
+  DogView,
+  DogViewSkeleton,
+} from "@/modules/dogs/ui/views/dog-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
 
 export const experimental_ppr = true;
 
-interface ProductPageProps {
+interface DogPageProps {
   searchParams: Promise<SearchParams>;
   params: Promise<{
     slug: string;
     productId: string;
   }>;
 }
-const ProductPage = async ({ params }: ProductPageProps) => {
+const DogPage = async ({ params }: DogPageProps) => {
   const { slug, productId } = await params;
 
   const queryClient = getQueryClient();
 
   void queryClient.prefetchQuery(
-    trpcServer.products.getOne.queryOptions({
+    trpcServer.dogs.getOne.queryOptions({
       id: productId,
     })
   );
 
   return (
     <HydrateClient>
-      <Suspense fallback={<ProductViewSkeleton />}>
-        <ProductView tenantSlug={slug} productId={productId} />
+      <Suspense fallback={<DogViewSkeleton />}>
+        <DogView tenantSlug={slug} dogId={productId} />
       </Suspense>
     </HydrateClient>
   );
