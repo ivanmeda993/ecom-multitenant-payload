@@ -78,6 +78,44 @@ export const DogView = ({ dogId, tenantSlug }: DogViewProps) => {
                 <p className="text-base font-medium">No description</p>
               )}
             </div>
+
+            <div className="p-6 border-t">
+              <h2 className="text-xl font-medium mb-4">Dog Characteristics</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between">
+                    <span className="font-medium">Sex:</span>
+                    <span className="capitalize">{dog.sex}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Color:</span>
+                    <span>{dog.color}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Weight:</span>
+                    <span>{dog.weight} kg</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Date of Birth:</span>
+                    <span>{new Date(dog.dateOfBirth).toLocaleDateString()}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex justify-between">
+                    <span className="font-medium">Microchipped:</span>
+                    <span>{dog.microchipped ? "Yes" : "No"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Vaccinated:</span>
+                    <span>{dog.vaccinated ? "Yes" : "No"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Pedigree/Papers:</span>
+                    <span>{dog.pedigree ? "Yes" : "No"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="col-span-2">

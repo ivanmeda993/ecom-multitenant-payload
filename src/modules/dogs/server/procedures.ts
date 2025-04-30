@@ -99,6 +99,12 @@ export const dogsRouter = createTRPCRouter({
         };
       }
 
+      if (input.sex) {
+        where.sex = {
+          equals: input.sex,
+        };
+      }
+
       console.log("WHERE", where);
 
       const data = await payload.find({

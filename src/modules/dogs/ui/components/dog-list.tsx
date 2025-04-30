@@ -66,6 +66,8 @@ export const DogList = ({
               name={dog.name}
               price={dog.price}
               age={dog.age}
+              sex={dog.sex}
+              color={dog.color}
               reviewCount={10}
               reviewRating={10}
             />

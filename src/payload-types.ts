@@ -70,7 +70,9 @@ export interface Config {
     users: User;
     tenants: Tenant;
     dogs: Dog;
+    breedGroups: BreedGroup;
     categories: Category;
+    breeds: Breed;
     tags: Tag;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -86,7 +88,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     dogs: DogsSelect<false> | DogsSelect<true>;
+    breedGroups: BreedGroupsSelect<false> | BreedGroupsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    breeds: BreedsSelect<false> | BreedsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -202,15 +206,70 @@ export interface Dog {
   name: string;
   slug: string;
   slugLock?: boolean | null;
-  breed: string | Category;
-  tags: (string | Tag)[];
+  breed: string | Breed;
+  badges?: (string | Tag)[] | null;
   description?: string | null;
-  age: number;
+  sex: 'male' | 'female';
+  color: string;
+  weight: number;
+  dateOfBirth: string;
+  ageInWeeks: number;
+  microchipped?: boolean | null;
+  vaccinated?: boolean | null;
+  pedigree?: boolean | null;
   price: number;
   image: string | Media;
   coverImage: string | Media;
   dogImages?: (string | Media)[] | null;
+  available?: boolean | null;
+  featured?: boolean | null;
   refundPolicy?: ('30-days' | '14-days' | '7-days' | '3-days' | '1-day' | 'no-refund') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "breeds".
+ */
+export interface Breed {
+  id: string;
+  name: string;
+  slug: string;
+  breedGroup: string | BreedGroup;
+  description?: string | null;
+  countryOfOrigin?: string | null;
+  size?: ('toy' | 'small' | 'medium' | 'large' | 'giant') | null;
+  coatType?: ('short' | 'medium' | 'long' | 'wire' | 'curly' | 'double') | null;
+  temperament?:
+    | {
+        trait?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  lifeExpectancy?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "breedGroups".
+ */
+export interface BreedGroup {
+  id: string;
+  name: string;
+  slug: string;
+  color?: string | null;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -235,16 +294,6 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
-export interface Tag {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -263,8 +312,16 @@ export interface PayloadLockedDocument {
         value: string | Dog;
       } | null)
     | ({
+        relationTo: 'breedGroups';
+        value: string | BreedGroup;
+      } | null)
+    | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'breeds';
+        value: string | Breed;
       } | null)
     | ({
         relationTo: 'tags';
@@ -362,14 +419,35 @@ export interface DogsSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   breed?: T;
-  tags?: T;
+  badges?: T;
   description?: T;
-  age?: T;
+  sex?: T;
+  color?: T;
+  weight?: T;
+  dateOfBirth?: T;
+  ageInWeeks?: T;
+  microchipped?: T;
+  vaccinated?: T;
+  pedigree?: T;
   price?: T;
   image?: T;
   coverImage?: T;
   dogImages?: T;
+  available?: T;
+  featured?: T;
   refundPolicy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "breedGroups_select".
+ */
+export interface BreedGroupsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  color?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -384,6 +462,28 @@ export interface CategoriesSelect<T extends boolean = true> {
   color?: T;
   parent?: T;
   subcategories?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "breeds_select".
+ */
+export interface BreedsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  breedGroup?: T;
+  description?: T;
+  countryOfOrigin?: T;
+  size?: T;
+  coatType?: T;
+  temperament?:
+    | T
+    | {
+        trait?: T;
+        id?: T;
+      };
+  lifeExpectancy?: T;
   updatedAt?: T;
   createdAt?: T;
 }

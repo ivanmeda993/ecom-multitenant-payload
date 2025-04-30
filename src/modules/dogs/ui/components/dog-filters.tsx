@@ -3,6 +3,7 @@
 import { useDogsFilters } from "@/modules/dogs/hooks/use-dogs-filters";
 import { PriceFilter } from "@/modules/dogs/ui/components/price-filter";
 import { DogFilterItem } from "@/modules/dogs/ui/components/dog-filter-item";
+import { SexFilter } from "@/modules/dogs/ui/components/sex-filter";
 import { TagsFilter } from "@/modules/dogs/ui/components/tags-filter";
 
 export const DogFilters = () => {
@@ -25,6 +26,12 @@ export const DogFilters = () => {
           maxPrice={filters.maxPrice}
           onMaxPriceChange={(maxPrice) => onChangeFilter("maxPrice", maxPrice)}
           onMinPriceChange={(minPrice) => onChangeFilter("minPrice", minPrice)}
+        />
+      </DogFilterItem>
+      <DogFilterItem title="Sex">
+        <SexFilter
+          value={filters.sex}
+          onChange={(value) => onChangeFilter("sex", value)}
         />
       </DogFilterItem>
       <DogFilterItem title="Tags" className="border-b-0">

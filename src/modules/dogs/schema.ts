@@ -1,5 +1,5 @@
 import { DEFAULT_PAGE_LIMIT } from "@/constants";
-import { sortValues } from "@/modules/dogs/nuqs-filters";
+import { sexValues, sortValues } from "@/modules/dogs/nuqs-filters";
 import { z } from "zod";
 
 export const GET_ONE_DOG_INPUTS_SCHEMA = z.object({
@@ -13,6 +13,7 @@ export const GET_MANY_DOGS_INPUTS_SCHEMA = z.object({
   minPrice: z.string().nullable().optional(),
   maxPrice: z.string().nullable().optional(),
   tags: z.array(z.string()).nullable().optional(),
+  sex: z.enum(sexValues).nullable().optional(),
   sort: z.enum(sortValues).nullable().optional(),
   tenantSlug: z.string().nullable().optional(),
 });

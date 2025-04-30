@@ -10,13 +10,15 @@ export const Dogs: CollectionConfig = {
     {
       name: "name",
       type: "text",
+      label: "Dog Name",
       required: true,
     },
     ...slugField(),
     {
       name: "breed",
       type: "relationship",
-      relationTo: "categories",
+      label: "Breed",
+      relationTo: "breeds",
       admin: {
         position: "sidebar",
       },
@@ -24,23 +26,73 @@ export const Dogs: CollectionConfig = {
       required: true,
     },
     {
-      name: "tags",
+      name: "badges",
       type: "relationship",
       relationTo: "tags",
       admin: {
         position: "sidebar",
       },
       hasMany: true,
-      required: true,
     },
     {
       name: "description",
-      type: "text",
+      type: "textarea",
     },
     {
-      name: "age",
-      type: "number",
+      name: "sex",
+      type: "select",
+      options: [
+        {
+          label: "Male",
+          value: "male",
+        },
+        {
+          label: "Female",
+          value: "female",
+        },
+      ],
       required: true,
+    },
+    {
+      name: "color",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "weight",
+      type: "number",
+      label: "Weight (kg)",
+      required: true,
+    },
+    {
+      name: "dateOfBirth",
+      type: "date",
+      label: "Date of Birth",
+      required: true,
+    },
+    {
+      name: "ageInWeeks",
+      type: "number",
+      label: "Age (in weeks)",
+      required: true,
+    },
+    {
+      name: "microchipped",
+      type: "checkbox",
+      label: "Microchipped",
+      defaultValue: false,
+    },
+    {
+      name: "vaccinated",
+      type: "checkbox",
+      label: "Vaccinated",
+      defaultValue: false,
+    },
+    {
+      name: "pedigree",
+      type: "checkbox",
+      label: "Pedigree/Papers",
+      defaultValue: false,
     },
     {
       name: "price",
@@ -66,6 +118,18 @@ export const Dogs: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       hasMany: true,
+      required: false,
+    },
+    {
+      name: "available",
+      type: "checkbox",
+      defaultValue: true,
+    },
+    {
+      name: "featured",
+      type: "checkbox",
+      label: "Featured Puppy",
+      defaultValue: false,
     },
     {
       name: "refundPolicy",
@@ -98,5 +162,12 @@ export const Dogs: CollectionConfig = {
       ],
       defaultValue: "30-days",
     },
+    // {
+    //   name: "tenant",
+    //   type: "relationship",
+    //   relationTo: "tenants",
+    //   required: true,
+    //   hasMany: false,
+    // },
   ],
 };

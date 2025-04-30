@@ -18,6 +18,8 @@ type DogCardProps = {
   reviewCount: number;
   price: number;
   age: number;
+  sex?: string;
+  color?: string;
 };
 export const DogCard = ({
   dogImage,
@@ -30,6 +32,8 @@ export const DogCard = ({
   name,
   id,
   age,
+  sex,
+  color,
 }: DogCardProps) => {
   const router = useRouter();
 
@@ -73,6 +77,23 @@ export const DogCard = ({
               </div>
             )}
           </div>
+
+          {(sex || color) && (
+            <div className="flex items-center gap-4 text-sm">
+              {sex && (
+                <div className="flex items-center gap-1">
+                  <span className="font-medium">Sex:</span>
+                  <span className="capitalize">{sex}</span>
+                </div>
+              )}
+              {color && (
+                <div className="flex items-center gap-1">
+                  <span className="font-medium">Color:</span>
+                  <span>{color}</span>
+                </div>
+              )}
+            </div>
+          )}
 
           <div
             className="flex items-center gap-2"

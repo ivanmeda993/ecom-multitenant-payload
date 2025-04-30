@@ -72,7 +72,7 @@ export const ImageMedia: React.FC<Props> = (props) => {
       alt={alt || ""}
       className={cn(className)}
       fill={fill}
-      height={fill ? undefined : height}
+      height={fill ? undefined : (height ?? 300)}
       placeholder="blur"
       blurDataURL={placeholderBlur}
       priority={priority}
@@ -80,7 +80,7 @@ export const ImageMedia: React.FC<Props> = (props) => {
       loading={loading}
       sizes={sizes}
       src={src}
-      width={fill ? undefined : width}
+      width={fill ? undefined : (width ?? 300)}
     />
   );
 };

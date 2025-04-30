@@ -6,9 +6,13 @@ import {
 } from "nuqs/server";
 
 export const sortValues = ["curated", "trending", "hot_and_new"] as const;
+export const sexValues = ["male", "female"] as const;
 
 export const params = {
   sort: parseAsStringLiteral(sortValues).withDefault("curated").withOptions({
+    clearOnDefault: true,
+  }),
+  sex: parseAsStringLiteral(sexValues).withOptions({
     clearOnDefault: true,
   }),
   minPrice: parseAsString

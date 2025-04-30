@@ -1,214 +1,139 @@
+import type { Tenant } from "@/payload-types";
 import config from "@/payload.config";
 import { getPayload } from "payload";
-
-const dogBreeds = [
-  {
-    name: "Retrievers",
-    color: "#FFB347",
-    slug: "retrievers",
-    subcategories: [
-      { name: "Golden Retriever", slug: "golden-retriever" },
-      { name: "Labrador Retriever", slug: "labrador-retriever" },
-      { name: "Chesapeake Bay Retriever", slug: "chesapeake-bay-retriever" },
-      { name: "Flat-Coated Retriever", slug: "flat-coated-retriever" },
-      {
-        name: "Nova Scotia Duck Tolling Retriever",
-        slug: "nova-scotia-duck-tolling-retriever",
-      },
-    ],
-  },
-  {
-    name: "Shepherds",
-    color: "#7EC8E3",
-    slug: "shepherds",
-    subcategories: [
-      { name: "German Shepherd", slug: "german-shepherd" },
-      { name: "Australian Shepherd", slug: "australian-shepherd" },
-      { name: "Belgian Shepherd", slug: "belgian-shepherd" },
-      { name: "Border Collie", slug: "border-collie" },
-      { name: "Shetland Sheepdog", slug: "shetland-sheepdog" },
-    ],
-  },
-  {
-    name: "Terriers",
-    color: "#D8B5FF",
-    slug: "terriers",
-    subcategories: [
-      { name: "Jack Russell Terrier", slug: "jack-russell-terrier" },
-      { name: "Bull Terrier", slug: "bull-terrier" },
-      { name: "Yorkshire Terrier", slug: "yorkshire-terrier" },
-      {
-        name: "West Highland White Terrier",
-        slug: "west-highland-white-terrier",
-      },
-      { name: "Scottish Terrier", slug: "scottish-terrier" },
-    ],
-  },
-  {
-    name: "Hounds",
-    color: "#FFE066",
-    slug: "hounds",
-    subcategories: [
-      { name: "Beagle", slug: "beagle" },
-      { name: "Basset Hound", slug: "basset-hound" },
-      { name: "Bloodhound", slug: "bloodhound" },
-      { name: "Greyhound", slug: "greyhound" },
-      { name: "Dachshund", slug: "dachshund" },
-    ],
-  },
-  {
-    name: "Sporting Dogs",
-    color: "#96E6B3",
-    slug: "sporting-dogs",
-    subcategories: [
-      { name: "Pointer", slug: "pointer" },
-      { name: "Setter", slug: "setter" },
-      { name: "Spaniel", slug: "spaniel" },
-      { name: "Vizsla", slug: "vizsla" },
-      { name: "Weimaraner", slug: "weimaraner" },
-    ],
-  },
-  {
-    name: "Working Dogs",
-    color: "#FF9AA2",
-    slug: "working-dogs",
-    subcategories: [
-      { name: "Boxer", slug: "boxer" },
-      { name: "Doberman Pinscher", slug: "doberman-pinscher" },
-      { name: "Great Dane", slug: "great-dane" },
-      { name: "Rottweiler", slug: "rottweiler" },
-      { name: "Saint Bernard", slug: "saint-bernard" },
-    ],
-  },
-  {
-    name: "Toy Dogs",
-    color: "#B5B9FF",
-    slug: "toy-dogs",
-    subcategories: [
-      { name: "Chihuahua", slug: "chihuahua" },
-      { name: "Pomeranian", slug: "pomeranian" },
-      { name: "Pug", slug: "pug" },
-      { name: "Shih Tzu", slug: "shih-tzu" },
-      { name: "Maltese", slug: "maltese" },
-    ],
-  },
-  {
-    name: "Non-Sporting Dogs",
-    color: "#FFCAB0",
-    slug: "non-sporting-dogs",
-    subcategories: [
-      { name: "Bulldog", slug: "bulldog" },
-      { name: "Dalmatian", slug: "dalmatian" },
-      { name: "Poodle", slug: "poodle" },
-      { name: "Chow Chow", slug: "chow-chow" },
-      { name: "Bichon Frise", slug: "bichon-frise" },
-    ],
-  },
-  {
-    name: "Herding Dogs",
-    color: "#FFD700",
-    slug: "herding-dogs",
-    subcategories: [
-      { name: "Australian Cattle Dog", slug: "australian-cattle-dog" },
-      { name: "Pembroke Welsh Corgi", slug: "pembroke-welsh-corgi" },
-      { name: "Cardigan Welsh Corgi", slug: "cardigan-welsh-corgi" },
-      { name: "Old English Sheepdog", slug: "old-english-sheepdog" },
-      { name: "Collie", slug: "collie" },
-    ],
-  },
-  {
-    name: "Mixed Breeds",
-    color: "#FF6B6B",
-    slug: "mixed-breeds",
-    subcategories: [
-      { name: "Labradoodle", slug: "labradoodle" },
-      { name: "Goldendoodle", slug: "goldendoodle" },
-      { name: "Cockapoo", slug: "cockapoo" },
-      { name: "Puggle", slug: "puggle" },
-      { name: "Schnoodle", slug: "schnoodle" },
-    ],
-  },
-];
+import type { File } from "payload";
+import {
+  dogBreeds,
+  dogTagsData,
+  dogsData,
+  tenantsData,
+  usersData,
+} from "./dogs";
 
 const seed = async () => {
   const payload = await getPayload({ config });
 
-  const adminTenant = await payload.create({
-    collection: "tenants",
-    data: {
-      name: "admin",
-      slug: "admin",
-      stipeAccountId: "acct_1H29922eZvKYlo2C",
-      stripeDetailsSubmitted: true,
-    },
-  });
+  const tenantsResult: Tenant[] = [];
 
-  // create admin user
-  await payload.create({
-    collection: "users",
-    data: {
-      email: "admin@gmail.com",
-      username: "admin",
-      password: "Test1234!",
-      roles: ["super-admin"],
-      tenants: [
-        {
-          tenant: adminTenant.id,
-        },
-      ],
-    },
-  });
-
-  // Create dog breeder tenant
-  const breederTenant = await payload.create({
-    collection: "tenants",
-    data: {
-      name: "Premium Dog Breeders",
-      slug: "premium-dog-breeders",
-      stipeAccountId: "acct_1H29922eZvKYlo2C",
-      stripeDetailsSubmitted: true,
-    },
-  });
-
-  // Create breeder user
-  await payload.create({
-    collection: "users",
-    data: {
-      email: "breeder@example.com",
-      username: "breeder",
-      password: "Test1234!",
-      roles: ["user"],
-      tenants: [
-        {
-          tenant: breederTenant.id,
-        },
-      ],
-    },
-  });
-
-  for (const breed of dogBreeds) {
-    const parentBreed = await payload.create({
-      collection: "categories",
-      data: {
-        name: breed.name,
-        slug: breed.slug,
-        color: breed.color,
-        parent: null,
-      },
+  for (const tenant of tenantsData) {
+    const tenantResult = await payload.create({
+      collection: "tenants",
+      data: tenant.data,
     });
+    tenantsResult.push(tenantResult as Tenant);
+  }
 
-    for (const subBreed of breed.subcategories || []) {
-      await payload.create({
-        collection: "categories",
+  console.log("Tenants created:", tenantsResult);
+
+  const usersResult = [];
+
+  if (tenantsResult.length > 0) {
+    for (const user of usersData) {
+      const userResult = await payload.create({
+        collection: "users",
         data: {
-          name: subBreed.name,
-          slug: subBreed.slug,
-          parent: parentBreed.id,
+          ...user.data,
+          tenants: [
+            {
+              tenant:
+                tenantsResult.find((tenant) => tenant?.slug === user.tenantSlug)
+                  ?.id || "",
+            },
+          ],
         },
       });
+      usersResult.push(userResult);
     }
   }
+
+  console.log("Users created:", usersResult);
+
+  const dogsGroupsResult = [];
+  const breedsResult = [];
+  for (const dogGroup of dogBreeds) {
+    const dogGroupResult = await payload.create({
+      collection: "breedGroups",
+      data: {
+        name: dogGroup.name,
+        slug: dogGroup.slug,
+        color: dogGroup.color,
+      },
+    });
+    dogsGroupsResult.push(dogGroupResult);
+
+    for (const subCategory of dogGroup.subcategories) {
+      const subCategoryResult = await payload.create({
+        collection: "breeds",
+        data: {
+          ...subCategory,
+          breedGroup: dogGroupResult.id,
+        },
+      });
+      breedsResult.push(subCategoryResult);
+    }
+  }
+
+  console.log("Breeds created:", breedsResult);
+  const tagsResult = [];
+  for (const tag of dogTagsData) {
+    const tagResult = await payload.create({
+      collection: "tags",
+      data: {
+        name: tag,
+      },
+    });
+    tagsResult.push(tagResult);
+  }
+
+  console.log("Tags created:", tagsResult);
+  // Filter out any null values from failed image uploads
+
+  const dogsResult = [];
+  const mainImagesResult = [];
+  const coverImagesResult = [];
+  for (const dog of dogsData) {
+    // 1. create main images
+    const mainImageBuffer = await fetchFileByURL(dog.image);
+    const coverImageBuffer = await fetchFileByURL(dog.coverImage);
+    const mainImageResult = await payload.create({
+      collection: "media",
+      data: {
+        alt: dog.name,
+      },
+      file: mainImageBuffer,
+    });
+    mainImagesResult.push(mainImageResult);
+    // 2. create cover images
+    const coverImageResult = await payload.create({
+      collection: "media",
+      data: {
+        alt: `${dog.name} cover image`,
+      },
+      file: coverImageBuffer,
+    });
+    coverImagesResult.push(coverImageResult);
+    // 3. create dog
+    const dogResult = await payload.create({
+      collection: "dogs",
+      data: {
+        ...dog,
+        image: mainImageResult.id,
+        coverImage: coverImageResult.id,
+        breed: breedsResult.find((breed) => breed.slug === dog.breedSlug)?.id,
+        tags: tagsResult.filter((tag) => dog.tags.includes(tag.name)),
+        tenant: tenantsResult.find((tenant) => tenant.slug === dog.tenantSlug)
+          ?.id,
+      },
+    });
+    dogsResult.push(dogResult);
+  }
 };
+
+// Get all breed categories for random assignment
+
+// Create about 30 dogs with various breeds and characteristics
+
+// Combine all tenants for random assignment
 
 try {
   await seed();
@@ -217,4 +142,24 @@ try {
 } catch (error) {
   console.error("Error seeding:", error);
   process.exit(1);
+}
+
+async function fetchFileByURL(url: string): Promise<File> {
+  const res = await fetch(url, {
+    credentials: "include",
+    method: "GET",
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch file from ${url}, status: ${res.status}`);
+  }
+
+  const data = await res.arrayBuffer();
+
+  return {
+    name: url.split("/").pop() || `file-${Date.now()}`,
+    data: Buffer.from(data),
+    mimetype: `image/${url.split(".").pop()}`,
+    size: data.byteLength,
+  };
 }

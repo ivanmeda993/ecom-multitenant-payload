@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
+import { BreedGroups } from "@/collections/breed-groups";
+import { Breeds } from "@/collections/breeds";
 import { Dogs } from "@/collections/dogs";
 import { Tags } from "@/collections/tags";
 import { Tenants } from "@/collections/tenants";
@@ -31,7 +33,16 @@ const payloadConfig = buildConfig({
   },
   // IMPORTANT: this is the prefix for all cookies
   cookiePrefix: COOKIE_PREFIX,
-  collections: [Users, Tenants, Dogs, Categories, Tags, Media],
+  collections: [
+    Users,
+    Tenants,
+    Dogs,
+    BreedGroups,
+    Categories,
+    Breeds,
+    Tags,
+    Media,
+  ],
   editor: defaultLexical,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
