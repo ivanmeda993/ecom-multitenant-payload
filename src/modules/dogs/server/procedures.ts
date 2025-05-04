@@ -2,7 +2,7 @@ import {
   GET_MANY_DOGS_INPUTS_SCHEMA,
   GET_ONE_DOG_INPUTS_SCHEMA,
 } from "@/modules/dogs/schema";
-import type { Media, Tenant } from "@/payload-types";
+import type { Breed, Media, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
 import type { Sort, Where } from "payload";
 
@@ -58,39 +58,43 @@ export const dogsRouter = createTRPCRouter({
         };
       }
 
-      if (input.categorySlug) {
-        const categoriesData = await payload.find({
-          collection: "categories",
+      if (input.breedGroupSlug) {
+        const breedsData = await payload.find({
+          collection: "breedGroups",
           limit: 1,
           depth: 1,
           pagination: false,
           where: {
             slug: {
-              equals: input.categorySlug,
+              equals: input.breedGroupSlug,
             },
           },
         });
 
-        const subcategories: string[] = [];
-        const parentCategory = categoriesData.docs[0];
-        if (parentCategory) {
+        const breeds: string[] = [];
+        const parentBreedGroup = breedsData.docs[0];
+        if (parentBreedGroup) {
           if (
-            parentCategory?.subcategories?.docs &&
-            parentCategory?.subcategories?.docs.length > 0
+            parentBreedGroup?.breeds?.docs &&
+            parentBreedGroup?.breeds?.docs.length > 0
           ) {
-            subcategories.push(
-              ...parentCategory.subcategories.docs.map((subcategory) =>
-                typeof subcategory === "object" && subcategory.slug
-                  ? subcategory.slug
-                  : ""
+            breeds.push(
+              ...parentBreedGroup.breeds.docs.map((breed) =>
+                typeof breed === "object" && breed.slug ? breed.slug : ""
               )
             );
           }
 
           where["breed.slug"] = {
-            in: [parentCategory.slug, ...subcategories],
+            in: [...breeds],
           };
         }
+      }
+
+      if (input.breedSlug) {
+        where["breed.slug"] = {
+          equals: input.breedSlug,
+        };
       }
 
       if (input.tags && input.tags.length > 0) {
@@ -99,13 +103,13 @@ export const dogsRouter = createTRPCRouter({
         };
       }
 
-      if (input.sex) {
+      if (input.sex && input.sex !== "all") {
         where.sex = {
           equals: input.sex,
         };
       }
-
-      console.log("WHERE", where);
+      console.log("INPUT", input);
+      console.log("WHERE DOGS QUERY", where);
 
       const data = await payload.find({
         collection: "dogs",
@@ -121,6 +125,7 @@ export const dogsRouter = createTRPCRouter({
         docs: data.docs.map((doc) => ({
           ...doc,
           image: doc.image as Media | null,
+          breed: doc.breed as Breed,
           tenant: doc.tenant as Tenant,
         })),
       };

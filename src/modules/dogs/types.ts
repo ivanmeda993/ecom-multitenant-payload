@@ -1,4 +1,4 @@
 import type { RouterOutput } from "@/types";
 
-export type DogsGetManyOutput = RouterOutput["categories"]["getMany"];
-export type DogsGetManyOutputSingle = DogsGetManyOutput[0];
+export type DogsGetManyOutput = RouterOutput["dogs"]["getMany"];
+export type DogsGetManyOutputSingle = DogsGetManyOutput["docs"][0];

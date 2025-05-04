@@ -111,7 +111,6 @@ export const Dogs: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       hasMany: false,
-      required: true,
     },
     {
       name: "dogImages",

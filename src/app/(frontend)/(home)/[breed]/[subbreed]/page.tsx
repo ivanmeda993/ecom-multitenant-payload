@@ -7,8 +7,8 @@ import { Suspense } from "react";
 
 interface SubCategoryPageProps {
   params: Promise<{
-    category: string;
-    subcategory: string;
+    breed: string;
+    subbreed: string;
   }>;
   searchParams: Promise<SearchParams>;
 }
@@ -18,21 +18,22 @@ const SubCategoryPage = async ({
   params,
   searchParams,
 }: SubCategoryPageProps) => {
-  const { subcategory } = await params;
+  const { breed, subbreed } = await params;
   const filters = await loadDogFilters(searchParams);
 
   const queryClient = getQueryClient();
   void queryClient.prefetchInfiniteQuery(
     trpcServer.dogs.getMany.infiniteQueryOptions({
       ...filters,
-      categorySlug: subcategory,
+      breedGroupSlug: breed,
+      breedSlug: subbreed,
       limit: DEFAULT_PAGE_LIMIT,
     })
   );
   return (
     <HydrateClient>
       <Suspense fallback={<div>loading</div>}>
-        <DogListView category={subcategory} />
+        <DogListView breed={subbreed} />
       </Suspense>
     </HydrateClient>
   );

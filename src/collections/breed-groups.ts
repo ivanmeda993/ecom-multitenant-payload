@@ -27,6 +27,14 @@ export const BreedGroups: CollectionConfig = {
       },
     },
     {
+      name: "breeds",
+      label: "Breeds",
+      type: "join",
+      collection: "breeds",
+      on: "breedGroup",
+      hasMany: true,
+    },
+    {
       name: "color",
       label: "Color",
       type: "text",

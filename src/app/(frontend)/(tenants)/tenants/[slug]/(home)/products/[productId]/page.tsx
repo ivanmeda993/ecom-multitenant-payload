@@ -1,7 +1,4 @@
-import {
-  DogView,
-  DogViewSkeleton,
-} from "@/modules/dogs/ui/views/dog-view";
+import { DogView, DogViewSkeleton } from "@/modules/dogs/ui/views/dog-view";
 import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
@@ -35,4 +32,4 @@ const DogPage = async ({ params }: DogPageProps) => {
   );
 };
 
-export default ProductPage;
+export default DogPage;

@@ -7,12 +7,14 @@ import { DogSort } from "@/modules/dogs/ui/components/dog-sort";
 import { Suspense } from "react";
 
 interface DogListViewProps {
-  category?: string;
+  breedGroup?: string;
+  breed?: string;
   tenant?: string;
   narrowView?: boolean;
 }
 export const DogListView = async ({
-  category,
+  breedGroup,
+  breed,
   tenant,
   narrowView,
 }: DogListViewProps) => {
@@ -29,7 +31,8 @@ export const DogListView = async ({
         <div className="lg:col-span-4 xl:col-span-6 ">
           <Suspense fallback={<DogListSkeleton narrowView={narrowView} />}>
             <DogList
-              category={category}
+              breedGroup={breedGroup}
+              breed={breed}
               tenant={tenant}
               narrowView={narrowView}
             />

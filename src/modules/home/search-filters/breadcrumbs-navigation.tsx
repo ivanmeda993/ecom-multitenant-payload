@@ -9,29 +9,29 @@ import {
 import Link from "next/link";
 
 interface BreadcrumbsNavigationProps {
-  activeCategoryName: string | undefined;
-  activeSubcategoryName: string | null;
-  activeCategorySlug: string | null;
+  activeBreedSlug: string | undefined;
+  activeBreedName: string | null;
+  activeSubBreedName: string | null;
 }
 export const BreadcrumbsNavigation = ({
-  activeCategoryName,
-  activeSubcategoryName,
-  activeCategorySlug,
+  activeBreedSlug,
+  activeBreedName,
+  activeSubBreedName,
 }: BreadcrumbsNavigationProps) => {
-  if (!activeCategoryName || activeCategorySlug === "all") return null;
+  if (!activeBreedName || activeBreedSlug === "all") return null;
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        {activeSubcategoryName ? (
+        {activeSubBreedName ? (
           <>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
                 <Link
-                  href={`/${activeCategorySlug}`}
+                  href={`/${activeBreedSlug}`}
                   className="text-xl font-medium underline text-primary"
                 >
-                  {activeCategoryName}
+                  {activeBreedName}
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -41,14 +41,14 @@ export const BreadcrumbsNavigation = ({
 
             <BreadcrumbItem>
               <BreadcrumbPage className="text-xl font-medium">
-                {activeSubcategoryName}
+                {activeSubBreedName}
               </BreadcrumbPage>
             </BreadcrumbItem>
           </>
         ) : (
           <BreadcrumbItem>
             <BreadcrumbPage className="text-xl font-medium">
-              {activeCategoryName}
+              {activeBreedName}
             </BreadcrumbPage>
           </BreadcrumbItem>
         )}

@@ -20,6 +20,7 @@ type DogCardProps = {
   age: number;
   sex?: string;
   color?: string;
+  breed: string;
 };
 export const DogCard = ({
   dogImage,
@@ -34,6 +35,7 @@ export const DogCard = ({
   age,
   sex,
   color,
+  breed,
 }: DogCardProps) => {
   const router = useRouter();
 
@@ -67,7 +69,7 @@ export const DogCard = ({
                 maximumFractionDigits: 0,
               }).format(price)}
             </p>
-            <p className="text-sm font-medium">Age: {age} years</p>
+            <p className="text-sm font-medium">Weeks: {age}</p>
             {reviewCount > 0 && (
               <div className="flex items-center gap-1">
                 <StarIcon className="size-3.5 fill-black" />
@@ -77,6 +79,7 @@ export const DogCard = ({
               </div>
             )}
           </div>
+          <p className="text-sm font-medium">Breed: {breed}</p>
 
           {(sex || color) && (
             <div className="flex items-center gap-4 text-sm">

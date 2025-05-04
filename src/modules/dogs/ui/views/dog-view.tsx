@@ -52,9 +52,7 @@ export const DogView = ({ dogId, tenantSlug }: DogViewProps) => {
                 </p>
               </div>
               <div className="px-6 py-4 flex items-center justify-center border-r">
-                <p className="text-base font-medium">
-                  Age: {dog.age} years
-                </p>
+                <p className="text-base font-medium">Weeks: {dog.ageInWeeks}</p>
               </div>
               <div className="hidden lg:flex px-6 py-4 items-center justify-center">
                 <div className="flex items-center gap-1">
@@ -97,7 +95,9 @@ export const DogView = ({ dogId, tenantSlug }: DogViewProps) => {
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">Date of Birth:</span>
-                    <span>{new Date(dog.dateOfBirth).toLocaleDateString()}</span>
+                    <span>
+                      {new Date(dog.dateOfBirth).toLocaleDateString()}
+                    </span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -151,9 +151,27 @@ export const DogView = ({ dogId, tenantSlug }: DogViewProps) => {
                       <div className="font-medium">
                         {rating} {rating === 1 ? "star" : "stars"}
                       </div>
-                      <Progress value={rating === 5 ? 100 : rating === 4 ? 80 : rating === 3 ? 60 : rating === 2 ? 40 : 20} />
+                      <Progress
+                        value={
+                          rating === 5
+                            ? 100
+                            : rating === 4
+                              ? 80
+                              : rating === 3
+                                ? 60
+                                : rating === 2
+                                  ? 40
+                                  : 20
+                        }
+                      />
                       <div className="font-medium">
-                        {rating === 5 ? 3 : rating === 4 ? 1 : rating === 3 ? 1 : 0}
+                        {rating === 5
+                          ? 3
+                          : rating === 4
+                            ? 1
+                            : rating === 3
+                              ? 1
+                              : 0}
                       </div>
                     </Fragment>
                   ))}

@@ -9,7 +9,8 @@ export const GET_ONE_DOG_INPUTS_SCHEMA = z.object({
 export const GET_MANY_DOGS_INPUTS_SCHEMA = z.object({
   cursor: z.number().default(1),
   limit: z.number().default(DEFAULT_PAGE_LIMIT),
-  categorySlug: z.string().nullable().optional(),
+  breedGroupSlug: z.string().nullable().optional(),
+  breedSlug: z.string().nullable().optional(),
   minPrice: z.string().nullable().optional(),
   maxPrice: z.string().nullable().optional(),
   tags: z.array(z.string()).nullable().optional(),
@@ -18,6 +19,4 @@ export const GET_MANY_DOGS_INPUTS_SCHEMA = z.object({
   tenantSlug: z.string().nullable().optional(),
 });
 
-export type GetManyDogsInputs = z.infer<
-  typeof GET_MANY_DOGS_INPUTS_SCHEMA
->;
+export type GetManyDogsInputs = z.infer<typeof GET_MANY_DOGS_INPUTS_SCHEMA>;

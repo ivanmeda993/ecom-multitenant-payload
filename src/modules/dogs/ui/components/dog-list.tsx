@@ -11,13 +11,15 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { InboxIcon } from "lucide-react";
 
 interface DogListProps {
-  category?: string;
+  breedGroup?: string;
+  breed?: string;
   tenant?: string;
   narrowView?: boolean;
 }
 
 export const DogList = ({
-  category,
+  breedGroup,
+  breed,
   tenant,
   narrowView,
 }: DogListProps) => {
@@ -27,7 +29,8 @@ export const DogList = ({
     useSuspenseInfiniteQuery(
       trpc.dogs.getMany.infiniteQueryOptions(
         {
-          categorySlug: category,
+          breedGroupSlug: breedGroup,
+          breedSlug: breed,
           tenantSlug: tenant,
           ...filters,
         },
@@ -37,6 +40,7 @@ export const DogList = ({
         }
       )
     );
+
   if (data.pages?.[0]?.docs?.length === 0) {
     return (
       <div className="border border-black border-dashed flex flex-col items-center justify-center p-8 bg-white w-full rounded-lg">
@@ -53,25 +57,26 @@ export const DogList = ({
           narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3  gap-4"
         )}
       >
-        {data?.pages
-          .flatMap((page) => page.docs)
-          .map((dog) => (
+        {data?.pages.flatMap((page, pageIndex) =>
+          page.docs.map((dog, docIndex) => (
             <DogCard
-              key={dog.id}
+              key={`${dog.id}-${dog.tenant.slug}-${pageIndex}-${docIndex}`}
+              id={dog.id}
               dogImage={dog.image}
               authorUsername={`${dog.tenant.name}'s store`}
               tenantSlug={dog.tenant.slug}
               authorAvatar={dog.tenant?.image}
-              id={dog.id}
               name={dog.name}
               price={dog.price}
-              age={dog.age}
+              age={dog.ageInWeeks}
               sex={dog.sex}
               color={dog.color}
+              breed={dog.breed.name}
               reviewCount={10}
               reviewRating={10}
             />
-          ))}
+          ))
+        )}
       </div>
       <div className="flex justify-center pt-8 ">
         {hasNextPage && (
@@ -92,9 +97,7 @@ export const DogList = ({
 interface DogListSkeletonProps {
   narrowView?: boolean;
 }
-export const DogListSkeleton = ({
-  narrowView,
-}: DogListSkeletonProps) => {
+export const DogListSkeleton = ({ narrowView }: DogListSkeletonProps) => {
   return (
     <div
       className={cn(

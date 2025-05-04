@@ -31,6 +31,7 @@ const seed = async () => {
     for (const user of usersData) {
       const userResult = await payload.create({
         collection: "users",
+        // @ts-ignore
         data: {
           ...user.data,
           tenants: [
@@ -64,6 +65,8 @@ const seed = async () => {
     for (const subCategory of dogGroup.subcategories) {
       const subCategoryResult = await payload.create({
         collection: "breeds",
+
+        // @ts-ignore
         data: {
           ...subCategory,
           breedGroup: dogGroupResult.id,
@@ -90,35 +93,30 @@ const seed = async () => {
 
   const dogsResult = [];
   const mainImagesResult = [];
-  const coverImagesResult = [];
   for (const dog of dogsData) {
     // 1. create main images
     const mainImageBuffer = await fetchFileByURL(dog.image);
-    const coverImageBuffer = await fetchFileByURL(dog.coverImage);
     const mainImageResult = await payload.create({
       collection: "media",
       data: {
         alt: dog.name,
+        width: 853,
+        height: 569,
+        focalX: 50,
+        focalY: 50,
       },
       file: mainImageBuffer,
     });
     mainImagesResult.push(mainImageResult);
     // 2. create cover images
-    const coverImageResult = await payload.create({
-      collection: "media",
-      data: {
-        alt: `${dog.name} cover image`,
-      },
-      file: coverImageBuffer,
-    });
-    coverImagesResult.push(coverImageResult);
+
     // 3. create dog
     const dogResult = await payload.create({
       collection: "dogs",
       data: {
         ...dog,
         image: mainImageResult.id,
-        coverImage: coverImageResult.id,
+        // @ts-ignore
         breed: breedsResult.find((breed) => breed.slug === dog.breedSlug)?.id,
         tags: tagsResult.filter((tag) => dog.tags.includes(tag.name)),
         tenant: tenantsResult.find((tenant) => tenant.slug === dog.tenantSlug)

@@ -2,26 +2,26 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { CategoriesGetManyOutput } from "@/modules/categories/types";
+import type { BreedsGetManyOutput } from "@/modules/breeds/types";
 import { ListFilterIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useLayoutEffect, useRef, useState } from "react";
-import { CategoriesSidebar } from "./categories-sidebar";
-import { CategoryDropdown } from "./category-dropdown";
+import { BreedDropdown } from "./breed-dropdown";
+import { BreedsSidebar } from "./breeds-sidebar";
 
-interface CategoriesProps {
-  data: CategoriesGetManyOutput;
+interface BreedsProps {
+  data: BreedsGetManyOutput;
 }
 
-export const Categories = ({ data }: CategoriesProps) => {
+export const Breeds = ({ data }: BreedsProps) => {
   const params = useParams();
 
-  const categoriesWithAll: CategoriesGetManyOutput = [
+  const breedsWithAll: BreedsGetManyOutput = [
     {
       id: "all",
       slug: "all",
       name: "All",
-      subcategories: [],
+      breeds: [],
       updatedAt: new Date().toDateString(),
       createdAt: new Date().toDateString(),
     },
@@ -32,19 +32,22 @@ export const Categories = ({ data }: CategoriesProps) => {
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
 
-  const [visibleCount, setVisibleCount] = useState(categoriesWithAll.length);
+  const [visibleCount, setVisibleCount] = useState(breedsWithAll.length);
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const categoryParam = params?.category as string | undefined;
-  const activeCategory = categoryParam || "all";
+  const breedParam = params?.breed as string | undefined;
+  const activeBreed = breedParam || "all";
 
-  const activeCategoryIndex = categoriesWithAll.findIndex(
-    (category) => category.slug === activeCategory
+  const activeBreedIndex = breedsWithAll.findIndex(
+    (breed) => breed.slug === activeBreed
   );
 
-  const isCategoryHidden =
-    activeCategoryIndex >= visibleCount && activeCategoryIndex !== -1;
+  console.log("activeBreedIndex", activeBreedIndex);
+  console.log("activeBreed", activeBreed);
+
+  const isBreedHidden =
+    activeBreedIndex >= visibleCount && activeBreedIndex !== -1;
 
   useLayoutEffect(() => {
     const calculateVisible = () => {
@@ -76,15 +79,12 @@ export const Categories = ({ data }: CategoriesProps) => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, [categoriesWithAll.length]);
+  }, [breedsWithAll.length]);
 
   return (
     <div className="relative w-full ">
       {/* Categories sidebar */}
-      <CategoriesSidebar
-        isOpen={isSidebarOpen}
-        onOpenChange={setIsSidebarOpen}
-      />
+      <BreedsSidebar isOpen={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
       {/* Hidden div to measure all items */}
       <div
@@ -96,11 +96,11 @@ export const Categories = ({ data }: CategoriesProps) => {
           left: "-9999",
         }}
       >
-        {categoriesWithAll.map((category) => (
-          <div key={category.id}>
-            <CategoryDropdown
-              category={category}
-              isActive={activeCategory === category.slug}
+        {breedsWithAll.map((breed) => (
+          <div key={breed.id}>
+            <BreedDropdown
+              breed={breed}
+              isActive={activeBreed === breed.slug}
               isNavigationHovered={false}
             />
           </div>
@@ -115,11 +115,11 @@ export const Categories = ({ data }: CategoriesProps) => {
         onMouseEnter={() => setIsAnyHovered(true)}
         onMouseLeave={() => setIsAnyHovered(false)}
       >
-        {categoriesWithAll.slice(0, visibleCount).map((category) => (
-          <div key={category.id}>
-            <CategoryDropdown
-              category={category}
-              isActive={activeCategory === category.slug}
+        {breedsWithAll.slice(0, visibleCount).map((breed) => (
+          <div key={breed.id}>
+            <BreedDropdown
+              breed={breed}
+              isActive={activeBreed === breed.slug}
               isNavigationHovered={isAnyHovered}
             />
           </div>
@@ -129,7 +129,7 @@ export const Categories = ({ data }: CategoriesProps) => {
           <Button
             className={cn(
               " px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
-              isCategoryHidden && !isAnyHovered && "bg-white border-primary"
+              isBreedHidden && !isAnyHovered && "bg-white border-primary"
             )}
             onClick={() => setIsSidebarOpen(true)}
           >

@@ -1,8 +1,7 @@
-import type { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
+import type { BreedsGetManyOutputSingle } from "@/modules/breeds/types";
 
-export const checkForSubcategories = (
-  category: CategoriesGetManyOutputSingle
-) => category.subcategories && category?.subcategories.length > 0;
+export const checkForSubbreeds = (breed: BreedsGetManyOutputSingle) =>
+  breed.breeds && breed?.breeds.length > 0;
 
 export const checkCollection = <T>(item: string | T): item is T =>
   typeof item === "object" && item !== null;

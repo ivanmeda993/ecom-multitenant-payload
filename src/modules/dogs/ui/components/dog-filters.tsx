@@ -1,8 +1,8 @@
 "use client";
 
 import { useDogsFilters } from "@/modules/dogs/hooks/use-dogs-filters";
-import { PriceFilter } from "@/modules/dogs/ui/components/price-filter";
 import { DogFilterItem } from "@/modules/dogs/ui/components/dog-filter-item";
+import { PriceFilter } from "@/modules/dogs/ui/components/price-filter";
 import { SexFilter } from "@/modules/dogs/ui/components/sex-filter";
 import { TagsFilter } from "@/modules/dogs/ui/components/tags-filter";
 

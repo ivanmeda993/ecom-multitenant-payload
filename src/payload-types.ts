@@ -71,8 +71,8 @@ export interface Config {
     tenants: Tenant;
     dogs: Dog;
     breedGroups: BreedGroup;
-    categories: Category;
     breeds: Breed;
+    categories: Category;
     tags: Tag;
     media: Media;
     'payload-locked-documents': PayloadLockedDocument;
@@ -80,6 +80,12 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
+    breedGroups: {
+      breeds: 'breeds';
+    };
+    breeds: {
+      dogs: 'dogs';
+    };
     categories: {
       subcategories: 'categories';
     };
@@ -89,8 +95,8 @@ export interface Config {
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     dogs: DogsSelect<false> | DogsSelect<true>;
     breedGroups: BreedGroupsSelect<false> | BreedGroupsSelect<true>;
-    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     breeds: BreedsSelect<false> | BreedsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -219,7 +225,7 @@ export interface Dog {
   pedigree?: boolean | null;
   price: number;
   image: string | Media;
-  coverImage: string | Media;
+  coverImage?: (string | null) | Media;
   dogImages?: (string | Media)[] | null;
   available?: boolean | null;
   featured?: boolean | null;
@@ -247,6 +253,11 @@ export interface Breed {
       }[]
     | null;
   lifeExpectancy?: string | null;
+  dogs?: {
+    docs?: (string | Dog)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -258,6 +269,11 @@ export interface BreedGroup {
   id: string;
   name: string;
   slug: string;
+  breeds?: {
+    docs?: (string | Breed)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   color?: string | null;
   description?: string | null;
   updatedAt: string;
@@ -316,12 +332,12 @@ export interface PayloadLockedDocument {
         value: string | BreedGroup;
       } | null)
     | ({
-        relationTo: 'categories';
-        value: string | Category;
-      } | null)
-    | ({
         relationTo: 'breeds';
         value: string | Breed;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
       } | null)
     | ({
         relationTo: 'tags';
@@ -446,22 +462,9 @@ export interface DogsSelect<T extends boolean = true> {
 export interface BreedGroupsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  breeds?: T;
   color?: T;
   description?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
- */
-export interface CategoriesSelect<T extends boolean = true> {
-  name?: T;
-  slug?: T;
-  slugLock?: T;
-  color?: T;
-  parent?: T;
-  subcategories?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -484,6 +487,21 @@ export interface BreedsSelect<T extends boolean = true> {
         id?: T;
       };
   lifeExpectancy?: T;
+  dogs?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  slugLock?: T;
+  color?: T;
+  parent?: T;
+  subcategories?: T;
   updatedAt?: T;
   createdAt?: T;
 }

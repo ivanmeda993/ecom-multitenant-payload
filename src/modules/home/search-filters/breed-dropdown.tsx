@@ -1,27 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { checkForSubcategories } from "@/lib/check-category";
+import { checkForSubbreeds } from "@/lib/check-category";
 import { cn } from "@/lib/utils";
-import type { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
-import { SubcategoryMenu } from "@/modules/home/search-filters/subcategory-menu";
+import type { BreedsGetManyOutputSingle } from "@/modules/breeds/types";
+import { SubbreedMenu } from "@/modules/home/search-filters/subbreed-menu";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-interface CategoryDropdownProps {
-  category: CategoriesGetManyOutputSingle;
+interface BreedDropdownProps {
+  breed: BreedsGetManyOutputSingle;
   isNavigationHovered?: boolean;
   isActive: boolean;
 }
-export const CategoryDropdown = ({
-  category,
-  isActive,
-}: CategoryDropdownProps) => {
+export const BreedDropdown = ({ breed, isActive }: BreedDropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const hasSubcategories = checkForSubcategories(category);
+  const hasSubBreeds = checkForSubbreeds(breed);
 
-  const onMouseEnter = () => hasSubcategories && setIsOpen(true);
+  const onMouseEnter = () => hasSubBreeds && setIsOpen(true);
   const onMouseLeave = () => setIsOpen(false);
   // const toggleDropdown = () => {
   //   if (hasSubcategories) {
@@ -48,11 +45,11 @@ export const CategoryDropdown = ({
           variant="link"
           asChild
         >
-          <Link href={`/${category.slug === "all" ? "" : category.slug}`}>
-            {category.name}
+          <Link href={`/${breed.slug === "all" ? "" : breed.slug}`}>
+            {breed.name}
           </Link>
         </Button>
-        {hasSubcategories && isOpen && (
+        {hasSubBreeds && isOpen && (
           <div
             className={cn(
               "-bottom-3 -translate-x-1/2 absolute left-1/2 h-0 w-0 border-r-[10px] border-r-transparent border-b-[10px] border-b-black border-l-[10px] border-l-transparent opacity-20",
@@ -62,7 +59,7 @@ export const CategoryDropdown = ({
         )}
       </div>
 
-      <SubcategoryMenu category={category} isOpen={isOpen} />
+      <SubbreedMenu breed={breed} isOpen={isOpen} />
     </div>
   );
 };

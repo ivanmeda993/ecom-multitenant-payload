@@ -5,9 +5,9 @@ import { HydrateClient, getQueryClient, trpcServer } from "@/trpc/server";
 import type { SearchParams } from "nuqs/server";
 import { Suspense } from "react";
 
-type CategoryPageProps = {
+type BreedPageProps = {
   params: Promise<{
-    category: string;
+    breed: string;
   }>;
   searchParams: Promise<SearchParams>;
 };
@@ -15,15 +15,15 @@ export const experimental_ppr = true;
 
 export const dynamic = "force-dynamic";
 
-const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
-  const { category } = await params;
+const BreedPage = async ({ params, searchParams }: BreedPageProps) => {
+  const { breed } = await params;
   const filters = await loadDogFilters(searchParams);
 
   const queryClient = getQueryClient();
   void queryClient.prefetchInfiniteQuery(
     trpcServer.dogs.getMany.infiniteQueryOptions({
       ...filters,
-      categorySlug: category,
+      breedGroupSlug: breed,
       limit: DEFAULT_PAGE_LIMIT,
     })
   );
@@ -31,10 +31,10 @@ const CategoryPage = async ({ params, searchParams }: CategoryPageProps) => {
   return (
     <HydrateClient>
       <Suspense fallback={<div>loading</div>}>
-        <DogListView category={category} />
+        <DogListView breedGroup={breed} />
       </Suspense>
     </HydrateClient>
   );
 };
 
-export default CategoryPage;
+export default BreedPage;

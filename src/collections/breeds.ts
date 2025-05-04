@@ -93,5 +93,13 @@ export const Breeds: CollectionConfig = {
       label: "Life Expectancy",
       type: "text",
     },
+    {
+      name: "dogs",
+      label: "Dogs in this breed",
+      type: "join",
+      collection: "dogs",
+      on: "breed",
+      hasMany: true,
+    },
   ],
 };

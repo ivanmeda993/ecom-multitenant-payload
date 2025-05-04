@@ -15,6 +15,7 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "db:fresh": "payload migrate:fresh",
     "db:seed": "bun run src/scripts/seed.ts",
+    "db:check-images": "bun run src/scripts/check-images.ts",
     "db:reset": "bun run db:fresh && bun run db:seed"
   },
   "dependencies": {

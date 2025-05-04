@@ -6,7 +6,7 @@ import { HydrateClient, prefetch, trpcServer } from "@/trpc/server";
 import { Suspense } from "react";
 
 export const SearchFilterServer = async () => {
-  void prefetch(trpcServer.categories.getMany.queryOptions());
+  void prefetch(trpcServer.breeds.getMany.queryOptions());
   return (
     <HydrateClient>
       <Suspense fallback={<SearchFiltersSkeleton />}>
